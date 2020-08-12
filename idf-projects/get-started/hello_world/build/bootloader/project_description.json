@@ -1,0 +1,18 @@
+{
+    "project_name":       "bootloader",
+    "project_path":       "/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject",
+    "build_dir":          "/home/null/Code/ESP32/idf-examples/get-started/hello_world/build/bootloader",
+    "config_file":        "/home/null/Code/ESP32/idf-examples/get-started/hello_world/sdkconfig",
+    "config_defaults":    "",
+    "app_elf":            "bootloader.elf",
+    "app_bin":            "bootloader.bin",
+    "git_revision":       "v4.0.1-dirty",
+    "phy_data_partition": "",
+    "monitor_baud" : "115200",
+    "config_environment" : {
+        "COMPONENT_KCONFIGS" : "/home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/Kconfig;/home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/Kconfig;/home/null/Code/ESP32/esp-idf-4.0.1/components/esp_common/Kconfig;/home/null/Code/ESP32/esp-idf-4.0.1/components/log/Kconfig;/home/null/Code/ESP32/esp-idf-4.0.1/components/spi_flash/Kconfig",
+        "COMPONENT_KCONFIGS_PROJBUILD" : "/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/Kconfig.projbuild;/home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/Kconfig.projbuild;/home/null/Code/ESP32/esp-idf-4.0.1/components/partition_table/Kconfig.projbuild"
+    },
+    "build_components" : [ "bootloader", "bootloader_support", "efuse", "esp32", "esp_common", "esp_rom", "esptool_py", "log", "main", "micro-ecc", "partition_table", "soc", "spi_flash", "xtensa", "" ],
+    "build_component_paths" : [ "/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader", "/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader_support", "/home/null/Code/ESP32/esp-idf-4.0.1/components/efuse", "/home/null/Code/ESP32/esp-idf-4.0.1/components/esp32", "/home/null/Code/ESP32/esp-idf-4.0.1/components/esp_common", "/home/null/Code/ESP32/esp-idf-4.0.1/components/esp_rom", "/home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py", "/home/null/Code/ESP32/esp-idf-4.0.1/components/log", "/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/main", "/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/components/micro-ecc", "/home/null/Code/ESP32/esp-idf-4.0.1/components/partition_table", "/home/null/Code/ESP32/esp-idf-4.0.1/components/soc", "/home/null/Code/ESP32/esp-idf-4.0.1/components/spi_flash", "/home/null/Code/ESP32/esp-idf-4.0.1/components/xtensa", "" ]
+}

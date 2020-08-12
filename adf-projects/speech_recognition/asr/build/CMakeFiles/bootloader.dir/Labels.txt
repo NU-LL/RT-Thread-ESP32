@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/CMakeFiles/bootloader
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/CMakeFiles/bootloader.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/CMakeFiles/bootloader-complete.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
