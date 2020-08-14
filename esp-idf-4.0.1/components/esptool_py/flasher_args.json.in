@@ -1,0 +1,20 @@
+{
+    "write_flash_args" : [ "--flash_mode", "${ESPFLASHMODE}",
+                           "--flash_size", "${ESPFLASHSIZE}",
+                           "--flash_freq", "${ESPFLASHFREQ}" ],
+    "flash_settings" : {
+        "flash_mode": "${ESPFLASHMODE}",
+        "flash_size": "${ESPFLASHSIZE}",
+        "flash_freq": "${ESPFLASHFREQ}"
+    },
+    "flash_files" : {
+        $<JOIN:${FLASH_PROJECT_ARGS_JSON},,
+        >
+    },
+    $<JOIN:${FLASH_PROJECT_ARGS_ENTRY_JSON},,
+    >,
+    "extra_esptool_args" : {
+        "after"  : "${ESPTOOLPY_AFTER}",
+        "before" : "${ESPTOOLPY_BEFORE}"
+    }
+}

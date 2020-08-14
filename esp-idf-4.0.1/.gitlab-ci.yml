@@ -1,0 +1,120 @@
+stages:
+  - build
+  - assign_test
+  - host_test
+  - target_test
+  - check
+  - deploy
+  - post_check
+
+variables:
+# System environment
+
+  # Common parameters for the 'make' during CI tests
+  MAKEFLAGS: "-j5 --no-keep-going"
+
+# GitLab-CI environment
+
+  # XXX_ATTEMPTS variables (https://docs.gitlab.com/ce/ci/yaml/README.html#job-stages-attempts) are not defined here.
+  # Use values from  "CI / CD Settings" - "Variables".
+
+  # GIT_STRATEGY is not defined here.
+  # Use an option from  "CI / CD Settings" - "General pipelines".
+
+  # we will download archive for each submodule instead of clone.
+  # we don't do "recursive" when fetch submodule as they're not used in CI now.
+  GIT_SUBMODULE_STRATEGY: none
+  SUBMODULE_FETCH_TOOL: "tools/ci/ci_fetch_submodule.py"
+  # by default we will fetch all submodules
+  # jobs can overwrite this variable to only fetch submodules they required
+  # set to "none" if don't need to fetch submodules
+  SUBMODULES_TO_FETCH: "all"
+  # tell build system do not check submodule update as we download archive instead of clone
+  IDF_SKIP_CHECK_SUBMODULES: 1
+
+  UNIT_TEST_BUILD_SYSTEM: cmake
+  IDF_PATH: "$CI_PROJECT_DIR"
+  BATCH_BUILD: "1"
+  V: "0"
+  APPLY_BOT_FILTER_SCRIPT: "$CI_PROJECT_DIR/tools/ci/apply_bot_filter.py"
+  CHECKOUT_REF_SCRIPT: "$CI_PROJECT_DIR/tools/ci/checkout_project_ref.py"
+
+# Docker images
+  BOT_DOCKER_IMAGE_TAG: ":latest"
+# target test config file, used by assign test job
+  CI_TARGET_TEST_CONFIG_FILE: "$CI_PROJECT_DIR/tools/ci/config/target-test.yml"
+
+
+
+# before each job, we need to check if this job is filtered by bot stage/job filter
+.apply_bot_filter: &apply_bot_filter
+  python $APPLY_BOT_FILTER_SCRIPT || exit 0
+
+.setup_tools_unless_target_test: &setup_tools_unless_target_test |
+  if [ "$CI_JOB_STAGE" != "target_test" ]; then
+  tools/idf_tools.py --non-interactive install && eval "$(tools/idf_tools.py --non-interactive export)" || exit 1
+  fi
+
+.fetch_submodules: &fetch_submodules |
+  python $SUBMODULE_FETCH_TOOL -s $SUBMODULES_TO_FETCH
+
+before_script:
+  - source tools/ci/setup_python.sh
+  # apply bot filter in before script
+  - *apply_bot_filter
+  # add gitlab ssh key
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - echo -n $GITLAB_KEY > ~/.ssh/id_rsa_base64
+  - base64 --decode --ignore-garbage ~/.ssh/id_rsa_base64 > ~/.ssh/id_rsa
+  - chmod 600 ~/.ssh/id_rsa
+  - echo -e "Host gitlab.espressif.cn\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  # Set some options and environment for CI
+  - source tools/ci/configure_ci_environment.sh
+  - *setup_tools_unless_target_test
+
+  - *fetch_submodules
+
+# used for check scripts which we want to run unconditionally
+.before_script_lesser_nofilter:
+  variables:
+    GIT_SUBMODULE_STRATEGY: none
+  before_script:
+    - echo "Not setting up GitLab key, not fetching submodules, not applying bot filter"
+    - source tools/ci/setup_python.sh
+    - source tools/ci/configure_ci_environment.sh
+
+# used for everything else where we want to do no prep, except for bot filter
+.before_script_lesser:
+  variables:
+    GIT_SUBMODULE_STRATEGY: none
+  before_script:
+    - echo "Not setting up GitLab key, not fetching submodules"
+    - source tools/ci/setup_python.sh
+    # apply bot filter in before script
+    - *apply_bot_filter
+    - source tools/ci/configure_ci_environment.sh
+
+.check_job_template:
+  stage: check
+  image: $CI_DOCKER_REGISTRY/esp32-ci-env$BOT_DOCKER_IMAGE_TAG
+  tags:
+    - host_test
+  dependencies: []
+  extends: .before_script_lesser_nofilter
+
+.check_job_template_with_filter:
+  stage: check
+  image: $CI_DOCKER_REGISTRY/esp32-ci-env$BOT_DOCKER_IMAGE_TAG
+  tags:
+    - host_test
+  dependencies: []
+  extends: .before_script_lesser_nofilter
+
+include:
+  - '/tools/ci/config/build.yml'
+  - '/tools/ci/config/assign-test.yml'
+  - '/tools/ci/config/host-test.yml'
+  - '/tools/ci/config/target-test.yml'
+  - '/tools/ci/config/check.yml'
+  - '/tools/ci/config/deploy.yml'
