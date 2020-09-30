@@ -16,8 +16,6 @@
 
 * adf部分：该部分是整个项目最后的工程，位于`adf-projects/speech_recognition/asr`下，需要提前搭建好esp-idf+esp-adf框架的环境。
 
-	> 该工程目前仍然使用FreeRTOS
-
 其余两部分分别为esp-idf框架和esp-adf框架：
 
 * esp-idf框架：即文件夹`esp-idf-4.0.1`，本项目所采用的esp-idf框架源码（4.0.1版本），该部分为[乐鑫官方idf源码](https://github.com/espressif/esp-idf/releases/tag/v4.0.1)，未曾改动
