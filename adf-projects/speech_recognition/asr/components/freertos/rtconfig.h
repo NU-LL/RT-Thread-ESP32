@@ -45,11 +45,11 @@
 // </h>
 
 // 调试输出
-#define RT_DEBUG_THREAD     1
-#define RT_DEBUG_SCHEDULER  1
+#define RT_DEBUG_THREAD     0
+#define RT_DEBUG_SCHEDULER  0
 #define RT_DEBUG_TIMER      0
 #define RT_DEBUG_IRQ        0
-#define RT_DEBUG_IPC        1
+#define RT_DEBUG_IPC        0
 
 
 // <h>Hook Configuration

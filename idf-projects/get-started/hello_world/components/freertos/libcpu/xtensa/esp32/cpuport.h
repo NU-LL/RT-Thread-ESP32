@@ -34,11 +34,4 @@
 void rt_hw_console_output(const char *str);
 char rt_hw_console_getchar(void);
 
-void rt_find_from_thread( void );
-
-void rt_debug_printf_a2(rt_uint32_t a2);
-void rt_debug_printf_a2a3(rt_uint32_t a2, rt_uint32_t a3);
-void rt_debug_test1(void);
-void rt_debug_test2(void);
-
 #endif

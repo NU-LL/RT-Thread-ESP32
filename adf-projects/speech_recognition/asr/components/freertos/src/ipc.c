@@ -1048,7 +1048,7 @@ rt_err_t rt_event_send(rt_event_t event, rt_uint32_t set)
     event->set |= set;
 
     RT_OBJECT_HOOK_CALL(rt_object_put_hook, (&(event->parent.parent)));
-    
+
     if (!rt_list_isempty(&event->parent.suspend_thread))
     {
         /* search thread list to resume thread */
@@ -1251,7 +1251,7 @@ rt_err_t rt_event_control(rt_event_t event, int cmd, void *arg)
     /* parameter check */
     RT_ASSERT(event != RT_NULL);
     RT_ASSERT(rt_object_get_type(&event->parent.parent) == RT_Object_Class_Event);
-    
+
     if (cmd == RT_IPC_CMD_RESET)
     {
         /* disable interrupt */
@@ -1967,6 +1967,24 @@ rt_err_t rt_mq_send(rt_mq_t mq, void *buffer, rt_size_t size)
     /* parameter check */
     RT_ASSERT(mq != RT_NULL);
     RT_ASSERT(rt_object_get_type(&mq->parent.parent) == RT_Object_Class_MessageQueue);
+    if(buffer == RT_NULL)
+    {
+        rt_thread_t tid = rt_thread_self();
+        rt_uint32_t idx = 0;
+        rt_uint8_t i = 0;
+        rt_kprintf("thread [%s] stack:\n", tid->name);
+        for(idx = 0; idx < tid->stack_size; idx++)
+        {
+            rt_kprintf("%02X ", *((rt_uint8_t *)(tid->stack_addr+idx)));
+            if((idx+1) % 16 == 0)
+            {
+                rt_kprintf("  |  ");
+                for(idx -= 15; (idx+1) % 16 != 0; idx++)
+                    rt_kprintf("%c", *((rt_uint8_t *)(tid->stack_addr+idx)));
+                rt_kprintf("\n");
+            }
+        }
+    }
     RT_ASSERT(buffer != RT_NULL);
     RT_ASSERT(size != 0);
 

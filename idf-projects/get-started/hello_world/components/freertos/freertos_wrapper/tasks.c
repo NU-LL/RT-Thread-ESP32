@@ -21,7 +21,7 @@
  * The value used to fill the stack of a task when the task is created.  This
  * is used purely for checking the high water mark for tasks.
  */
-#define tskSTACK_FILL_BYTE	( 0xa5U )
+#define tskSTACK_FILL_BYTE	( 0x23U ) // rt-thread中会填入0x23
 
 // 为了兼容 newlib ，newlib中会通过该变量来判断系统是否已经启动
 // 需要手动置为 pdTRUE
@@ -68,7 +68,7 @@ volatile BaseType_t xSchedulerRunning 		= pdFALSE;
     {
         rt_thread_t tid = RT_NULL;
         UBaseType_t rtt_priority = RT_THREAD_PRIORITY_MAX - 1 - uxPriority;//configMAX_PRIORITIES;//rtt最低优先级为 RT_THREAD_PRIORITY_MAX-1   freertos最低优先级为0
-        tid = rt_thread_create(pcName, pvTaskCode, pvParameters, usStackDepth, (rt_uint8_t)rtt_priority, 5);
+        tid = rt_thread_create(pcName, pvTaskCode, pvParameters, usStackDepth, (rt_uint8_t)rtt_priority, 50);
         if (tid != RT_NULL)
         {
             if( ( void * ) pvCreatedTask != NULL )
@@ -210,6 +210,7 @@ volatile BaseType_t xSchedulerRunning 		= pdFALSE;
 #if( portUSING_MPU_WRAPPERS == 1 )
 	BaseType_t xTaskCreateRestricted( const TaskParameters_t * const pxTaskDefinition, TaskHandle_t *pxCreatedTask )
     {
+        rt_kprintf("error : xTaskCreateRestricted not implemented!!!\n\n");
         return pdPASS;
     }
 #endif
@@ -259,6 +260,7 @@ volatile BaseType_t xSchedulerRunning 		= pdFALSE;
  */
 void vTaskAllocateMPURegions( TaskHandle_t xTask, const MemoryRegion_t * const pxRegions )
 {
+    rt_kprintf("error : vTaskAllocateMPURegions not implemented!!!\n\n");
     return ;
 }
 
@@ -300,17 +302,35 @@ void vTaskAllocateMPURegions( TaskHandle_t xTask, const MemoryRegion_t * const p
 #if ( INCLUDE_vTaskDelete == 1 )
     void vTaskDelete( TaskHandle_t xTaskToDelete )
     {
-    #if( configSUPPORT_STATIC_ALLOCATION == 1 )
+    // #if( configSUPPORT_STATIC_ALLOCATION == 1 )
         if(NULL == xTaskToDelete)
+        {
+            // 对于传入参数为空 即删除自身线程的
+            // 这里暂时只能采用无限延时来实现
+            while(1)
+            {
+                rt_thread_delay(1000);
+            }
+            rt_kprintf("delete allocated thread [%s]\n", rt_thread_self()->name);
             rt_thread_delete(rt_thread_self());//动态删除
+        }
         else
+        {
+            rt_kprintf("delete allocated thread [%s]\n", ((rt_thread_t)xTaskToDelete)->name);
             rt_thread_delete((rt_thread_t)xTaskToDelete);//动态删除
-    #else
-        if(NULL == xTaskToDelete)
-            rt_thread_detach(rt_thread_self());//静态删除
-        else
-            rt_thread_detach((rt_thread_t)xTaskToDelete);//静态删除
-    #endif
+        }
+    // #else
+    //     if(NULL == xTaskToDelete)
+    //     {
+    //         rt_kprintf("delete static thread [%s]\n", rt_thread_self()->name);
+    //         rt_thread_detach(rt_thread_self());//静态删除
+    //     }
+    //     else
+    //     {
+    //         rt_kprintf("delete static thread [%s]\n", ((rt_thread_t)xTaskToDelete)->name);
+    //         rt_thread_detach((rt_thread_t)xTaskToDelete);//静态删除
+    //     }
+    // #endif
     }
 #endif /* INCLUDE_vTaskDelete */
 
@@ -754,21 +774,12 @@ void vTaskAllocateMPURegions( TaskHandle_t xTask, const MemoryRegion_t * const p
 void vTaskStartScheduler( void )
 {
     extern int rtthread_startup(void);
-    // extern void _xt_tick_divisor_init(void);
-    // extern void _frxt_tick_timer_init(void);
 
     // 先关全局中断
     rt_hw_interrupt_disable();
 
     // 必须手动置位 否则 newlib 中会报错
     xSchedulerRunning = pdTRUE;
-
-    // 这里没必要初始化 挪到了 rt_hw_board_init 中
-    // //初始化硬件定时器（systick）
-    // /* Init the tick divisor value */
-	// _xt_tick_divisor_init();
-	// /* Setup the hardware to generate the tick. */
-	// _frxt_tick_timer_init();
 
     rtthread_startup();
 //     rt_system_scheduler_start();
@@ -1013,6 +1024,7 @@ UBaseType_t uxTaskGetNumberOfTasks( void )
 	/* A critical section is not required because the variables are of type
 	BaseType_t. */
 	//利用rtt容器(object.c)可以实现，这里暂不实现
+    rt_kprintf("error : uxTaskGetNumberOfTasks not implemented!!!\n\n");
     return NULL;
 }
 
@@ -1064,7 +1076,7 @@ UBaseType_t uxTaskGetNumberOfTasks( void )
 
 	static uint32_t prvTaskCheckFreeStackSpace( const uint8_t * pucStackByte )
 	{
-	uint32_t ulCount = 0U;
+	    uint32_t ulCount = 0U;
 
 		while( *pucStackByte == ( uint8_t ) tskSTACK_FILL_BYTE )
 		{
@@ -1150,6 +1162,7 @@ constant. */
 		void vTaskSetApplicationTaskTag( TaskHandle_t xTask, TaskHookFunction_t pxHookFunction )
         {
             //暂时啥也不干
+            rt_kprintf("error : vTaskSetApplicationTaskTag not implemented!!!\n\n");
         }
 
 		/**
@@ -1162,6 +1175,7 @@ constant. */
 		TaskHookFunction_t xTaskGetApplicationTaskTag( TaskHandle_t xTask )
         {
             //暂时啥也不干
+            rt_kprintf("error : xTaskGetApplicationTaskTag not implemented!!!\n\n");
         }
 	#endif /* configUSE_APPLICATION_TASK_TAG ==1 */
 #endif /* ifdef configUSE_APPLICATION_TASK_TAG */
@@ -1182,7 +1196,9 @@ constant. */
 	 */
 	void vTaskSetThreadLocalStoragePointer( TaskHandle_t xTaskToSet, BaseType_t xIndex, void *pvValue )
     {
-        //暂时啥也不干
+        // 该部分是实现pthread中线程中用户申请变量垃圾回收的一些函数，暂时先不实现 可能会造成内存泄漏
+        // 暂时啥也不干
+        // rt_kprintf("error : vTaskSetThreadLocalStoragePointer not implemented!!!\n\n");
     }
 
 
@@ -1201,7 +1217,9 @@ constant. */
 	 */
 	void *pvTaskGetThreadLocalStoragePointer( TaskHandle_t xTaskToQuery, BaseType_t xIndex )
     {
+        // 该部分是实现pthread中线程中用户申请变量垃圾回收的一些函数，暂时先不实现 可能会造成内存泄漏
         //暂时啥也不干 可能有bug
+        // rt_kprintf("error : pvTaskGetThreadLocalStoragePointer not implemented!!!\n\n");
         return NULL;
     }
 
@@ -1237,7 +1255,9 @@ constant. */
 		 */
 		void vTaskSetThreadLocalStoragePointerAndDelCallback( TaskHandle_t xTaskToSet, BaseType_t xIndex, void *pvValue, TlsDeleteCallbackFunction_t pvDelCallback)
         {
+            // 该部分是实现pthread中线程中用户申请变量垃圾回收的一些函数，暂时先不实现 可能会造成内存泄漏
             //暂时啥也不干
+            // rt_kprintf("error : vTaskSetThreadLocalStoragePointerAndDelCallback not implemented!!!\n\n");
         }
 	#endif
 
@@ -1256,6 +1276,7 @@ constant. */
 	BaseType_t xTaskCallApplicationTaskHook( TaskHandle_t xTask, void *pvParameter )
 	{
         //暂时啥也不干
+        rt_kprintf("error : xTaskCallApplicationTaskHook not implemented!!!\n\n");
 	}
 #endif /* configUSE_APPLICATION_TASK_TAG */
 
@@ -1407,6 +1428,7 @@ constant. */
 	UBaseType_t uxTaskGetSystemState( TaskStatus_t * const pxTaskStatusArray, const UBaseType_t uxArraySize, uint32_t * const pulTotalRunTime )
 	{
         //暂时啥也不干
+        rt_kprintf("error : uxTaskGetSystemState not implemented!!!\n\n");
     }
 #endif /* configUSE_TRACE_FACILITY */
 
@@ -1456,6 +1478,7 @@ constant. */
 	void vTaskList( char * pcWriteBuffer )
 	{
         //暂时啥也不干
+        rt_kprintf("error : vTaskList not implemented!!!\n\n");
     }
 #endif /* ( ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) ) */
 
@@ -1512,6 +1535,7 @@ constant. */
 	void vTaskGetRunTimeStats( char *pcWriteBuffer )
 	{
         //暂时啥也不干
+        rt_kprintf("error : vTaskGetRunTimeStats not implemented!!!\n\n");
     }
 #endif /* ( ( configGENERATE_RUN_TIME_STATS == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) ) */
 
@@ -1576,6 +1600,7 @@ constant. */
 	BaseType_t xTaskNotify( TaskHandle_t xTaskToNotify, uint32_t ulValue, eNotifyAction eAction )
 	{
         //目前就pthread中会用到，暂时不管
+        rt_kprintf("error : xTaskNotify not implemented!!!\n\n");
         return pdPASS;
     }
 #endif /* configUSE_TASK_NOTIFICATIONS */
@@ -1668,6 +1693,7 @@ constant. */
 BaseType_t xTaskNotifyFromISR( TaskHandle_t xTaskToNotify, uint32_t ulValue, eNotifyAction eAction, BaseType_t *pxHigherPriorityTaskWoken )
 {
     //暂时啥也不干
+    rt_kprintf("error : xTaskNotifyFromISR not implemented!!!\n\n");
     return pdPASS;
 }
 
@@ -1746,6 +1772,7 @@ BaseType_t xTaskNotifyFromISR( TaskHandle_t xTaskToNotify, uint32_t ulValue, eNo
 	BaseType_t xTaskNotifyWait( uint32_t ulBitsToClearOnEntry, uint32_t ulBitsToClearOnExit, uint32_t *pulNotificationValue, TickType_t xTicksToWait )
 	{
         //目前就pthread中会用到，暂时不管
+        rt_kprintf("error : xTaskNotifyWait not implemented!!!\n\n");
         return pdPASS;
     }
 #endif /* configUSE_TASK_NOTIFICATIONS */
@@ -1805,6 +1832,7 @@ BaseType_t xTaskNotifyFromISR( TaskHandle_t xTaskToNotify, uint32_t ulValue, eNo
 #if( configUSE_TASK_NOTIFICATIONS == 1 )
 	void vTaskNotifyGiveFromISR( TaskHandle_t xTaskToNotify, BaseType_t *pxHigherPriorityTaskWoken )
 	{
+        rt_kprintf("error : vTaskNotifyGiveFromISR not implemented!!!\n\n");
         return ;
 	}
 #endif /* configUSE_TASK_NOTIFICATIONS */
@@ -1879,6 +1907,7 @@ BaseType_t xTaskNotifyFromISR( TaskHandle_t xTaskToNotify, uint32_t ulValue, eNo
 
 	uint32_t ulTaskNotifyTake( BaseType_t xClearCountOnExit, TickType_t xTicksToWait )
 	{
+        rt_kprintf("error : ulTaskNotifyTake not implemented!!!\n\n");
         return 0;
     }
 #endif /* configUSE_TASK_NOTIFICATIONS */
@@ -2265,6 +2294,7 @@ For ESP32 FreeRTOS, vTaskExitCritical implements both portEXIT_CRITICAL and port
  */
 BaseType_t xTaskGetAffinity( TaskHandle_t xTask )
 {
+    rt_kprintf("error : xTaskGetAffinity not implemented!!!\n\n");
     return 0;
 }
 
@@ -2285,6 +2315,7 @@ BaseType_t xTaskGetAffinity( TaskHandle_t xTask )
 #if ( configUSE_TICKLESS_IDLE != 0 )
 	void vTaskStepTick( const TickType_t xTicksToJump )
 	{
+        rt_kprintf("error : vTaskStepTick not implemented!!!\n\n");
 		//暂时啥也不干
 	}
 #endif /* configUSE_TICKLESS_IDLE */
@@ -2332,6 +2363,7 @@ BaseType_t xTaskGetAffinity( TaskHandle_t xTask )
 #if ( configENABLE_TASK_SNAPSHOT == 1 )
     UBaseType_t uxTaskGetSnapshotAll( TaskSnapshot_t * const pxTaskSnapshotArray, const UBaseType_t uxArraySize, UBaseType_t * const pxTcbSz )
 	{
+        rt_kprintf("error : uxTaskGetSnapshotAll not implemented!!!\n\n");
         return 0;
     }
 #endif

@@ -1,4 +1,4 @@
-# Install script for directory: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/main
+# Install script for directory: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

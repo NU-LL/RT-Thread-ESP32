@@ -25,8 +25,6 @@
 
 #include "xtensa_rtos.h"
 #include "sdkconfig.h"
-// #include <rthw.h>
-// #include <rtthread.h>
 
 #define TOPOFSTACK_OFFS                 0x00    /* StackType_t *pxTopOfStack */
 #define CP_TOPOFSTACK_OFFS              0x04    /* xMPU_SETTINGS.coproc_area */
@@ -89,22 +87,6 @@ port_switch_flag:
 *
 *******************************************************************************
 */
-//     .global     _frxt_setup_switch
-//     .type       _frxt_setup_switch,@function
-//     .align      4
-// _frxt_setup_switch:
-
-//     ENTRY(16)
-
-// 	getcoreid a3
-//     movi    a2, port_switch_flag
-// 	addx4	a2,  a3, a2
-
-//     movi    a3, 1
-//     s32i    a3, a2, 0
-
-//     RET(16)
-
 //置位中断标志位 rt_thread_switch_interrupt_flag
 //宏 portYIELD_FROM_ISR 会调用该函数
 // 该宏需要修改！！！
@@ -142,55 +124,6 @@ _frxt_setup_switch:
 *
 *******************************************************************************
 */
-//     .globl  _frxt_int_enter
-//     .type   _frxt_int_enter,@function
-//     .align  4
-// _frxt_int_enter:
-
-//     /* Save a12-13 in the stack frame as required by _xt_context_save. */
-//     s32i    a12, a1, XT_STK_A12
-//     s32i    a13, a1, XT_STK_A13
-
-//     /* Save return address in a safe place (free a0). */
-//     mov     a12, a0
-
-//     /* Save the rest of the interrupted context (preserves A12-13). */
-//     call0   _xt_context_save
-
-//     /*
-//     Save interrupted task's SP in TCB only if not nesting.
-//     Manage nesting directly rather than call the generic IntEnter()
-//     (in windowed ABI we can't call a C function here anyway because PS.EXCM is still set).
-//     */
-// 	getcoreid a4
-//     movi    a2,  port_xSchedulerRunning
-// 	addx4	a2,  a4, a2
-//     movi    a3,  port_interruptNesting
-// 	addx4	a3,  a4, a3
-//     l32i    a2,  a2, 0                  /* a2 = port_xSchedulerRunning     */
-//     beqz    a2,  1f                     /* scheduler not running, no tasks */
-//     l32i    a2,  a3, 0                  /* a2 = port_interruptNesting      */
-//     addi    a2,  a2, 1                  /* increment nesting count         */
-//     s32i    a2,  a3, 0                  /* save nesting count              */
-//     bnei    a2,  1, .Lnested            /* !=0 before incr, so nested      */
-
-//     movi    a2,  pxCurrentTCB
-// 	addx4	a2,  a4, a2
-//     l32i    a2,  a2, 0                  /* a2 = current TCB                */
-//     beqz    a2,  1f
-//     s32i    a1,  a2, TOPOFSTACK_OFFS    /* pxCurrentTCB->pxTopOfStack = SP */
-//     movi    a1,  port_IntStack+configISR_STACK_SIZE   /* a1 = top of intr stack for CPU 0  */
-//     movi    a2,  configISR_STACK_SIZE   /* add configISR_STACK_SIZE * cpu_num to arrive at top of stack for cpu_num */
-// 	mull	a2,  a4, a2
-// 	add     a1,  a1, a2					/* for current proc */
-
-// .Lnested:
-// 1:
-//     mov     a0,  a12                    /* restore return addr and return  */
-//     ret
-
-
-
 //进入中断
 //本应该调用 rt_interrupt_enter
 //但是这里只能汇编 C的环境还没有配置好
@@ -214,13 +147,6 @@ _frxt_int_enter:
     l32i    a2,  a3, 0                  /* a2 = rt_interrupt_nest          */
     addi    a2,  a2, 1                  /* increment nesting count         */
     s32i    a2,  a3, 0                  /* save nesting count              */
-
-    //rt_interrupt_nest ++; 8bit 变量 这里按照32bit读取可能也有bug
-    //这里有 BUG !!! l32i为读取地址中的数据
-    // movi    a3,  rt_interrupt_nest      /* a3 = rt_interrupt_nest          */
-    // addi    a2,  a2, 1                  /* increment nesting count         */
-    // s32i    a2,  a3, 0                  /* save nesting count              */
-
 
     //由于xtensa架构没有 msp和 psp
     //这里来设置中断栈 之后中断中才能调用C函数
@@ -252,80 +178,6 @@ _frxt_int_enter:
 *
 *******************************************************************************
 */
-//     .globl  _frxt_int_exit
-//     .type   _frxt_int_exit,@function
-//     .align  4
-// _frxt_int_exit:
-
-// 	getcoreid a4
-//     movi    a2,  port_xSchedulerRunning
-// 	addx4	a2,  a4, a2
-//     movi    a3,  port_interruptNesting
-// 	addx4	a3,  a4, a3
-//     rsil    a0,  XCHAL_EXCM_LEVEL       /* lock out interrupts             */
-//     l32i    a2,  a2, 0                  /* a2 = port_xSchedulerRunning     */
-//     beqz    a2,  .Lnoswitch             /* scheduler not running, no tasks */
-//     l32i    a2,  a3, 0                  /* a2 = port_interruptNesting      */
-//     addi    a2,  a2, -1                 /* decrement nesting count         */
-//     s32i    a2,  a3, 0                  /* save nesting count              */
-//     bnez    a2,  .Lnesting              /* !=0 after decr so still nested  */
-
-//     movi    a2,  pxCurrentTCB
-// 	addx4	a2,  a4, a2
-//     l32i    a2,  a2, 0                  /* a2 = current TCB                */
-//     beqz    a2,  1f                     /* no task ? go to dispatcher      */
-//     l32i    a1,  a2, TOPOFSTACK_OFFS    /* SP = pxCurrentTCB->pxTopOfStack */
-
-//     movi    a2,  port_switch_flag       /* address of switch flag          */
-// 	addx4	a2,  a4, a2					/* point to flag for this cpu      */
-//     l32i    a3,  a2, 0                  /* a3 = port_switch_flag           */
-//     beqz    a3,  .Lnoswitch             /* flag = 0 means no switch reqd   */
-//     movi    a3,  0
-//     s32i    a3,  a2, 0                  /* zero out the flag for next time */
-
-// 1:
-//     /*
-//     Call0 ABI callee-saved regs a12-15 need to be saved before possible preemption.
-//     However a12-13 were already saved by _frxt_int_enter().
-//     */
-//     #ifdef __XTENSA_CALL0_ABI__
-//     s32i    a14, a1, XT_STK_A14
-//     s32i    a15, a1, XT_STK_A15
-//     #endif
-
-//     #ifdef __XTENSA_CALL0_ABI__
-//     call0   vPortYieldFromInt       /* call dispatch inside the function; never returns */
-//     #else
-//     call4   vPortYieldFromInt       /* this one returns */
-//     call0   _frxt_dispatch          /* tail-call dispatcher */
-//     /* Never returns here. */
-//     #endif
-
-// .Lnoswitch:
-//     /*
-//     If we came here then about to resume the interrupted task.
-//     */
-
-// .Lnesting:
-//     /*
-//     We come here only if there was no context switch, that is if this
-//     is a nested interrupt, or the interrupted task was not preempted.
-//     In either case there's no need to load the SP.
-//     */
-
-//     /* Restore full context from interrupt stack frame */
-//     call0   _xt_context_restore
-
-//     /*
-//     Must return via the exit dispatcher corresponding to the entrypoint from which
-//     this was called. Interruptee's A0, A1, PS, PC are restored and the interrupt
-//     stack frame is deallocated in the exit dispatcher.
-//     */
-//     l32i    a0,  a1, XT_STK_EXIT
-//     ret
-
-
-
 //退出中断
 //本应该调用 rt_interrupt_leave
 //同时应该开始调度（没有pendSV）
@@ -335,7 +187,6 @@ _frxt_int_enter:
 _frxt_int_exit:
 
     //rt_interrupt_nest --;
-    //call4 rt_debug_test1
     movi    a3,  rt_interrupt_nest
     rsil    a0,  XCHAL_EXCM_LEVEL       /* lock out interrupts             */
     l32i    a2,  a3, 0                  /* a2 = rt_interrupt_nest          */
@@ -343,24 +194,13 @@ _frxt_int_exit:
     s32i    a2,  a3, 0                  /* save nesting count              */
     bnez    a2,  .Lnesting              /* !=0 after decr so still nested  */ //如果嵌套 直接退出
 
-    // //如果当前线程为空 则进行调度
-    // //rtt 中是在 Pend SV中根据 rt_interrupt_from_thread 是否为 0 来判断是否为第一个线程
-    // //这里可能是判断第一个线程的 还需要仔细考虑
-    // movi    a2,  rt_current_thread
-    // l32i    a2,  a2, 0                  /* a2 = current TCB                */
-    // beqz    a2,  1f                     /* no task ? go to dispatcher      */  //如果 rt_current_thread=0 则进行调度（考虑到这种情况或许是freertos中调用第一个线程？）
-    // l32i    a1,  a2, RTT_TOPOFSTACK_OFFS    /* SP = pxCurrentTCB->sp */
-
     //置位标志位 方便 vPortYieldFromInt (rt_hw_context_switch_interrupt) 中调度
     movi    a2,  rt_thread_switch_interrupt_flag       /* address of switch flag          */
     l32i    a3,  a2, 0                  /* a3 = rt_thread_switch_interrupt_flag           */
     beqz    a3,  .Lnoswitch             /* flag = 0 means no switch reqd   */       // 根据 rt_thread_switch_interrupt_flag 的值决定中断后是否需要切换上下文
 
-    //call4 rt_debug_test1
-
     movi    a3,  0
     s32i    a3,  a2, 0                  /* zero out the flag for next time */
-
 
     //这里表示需要切换上下文
 1:
@@ -574,94 +414,6 @@ _frxt_tick_timer_init:
 *
 **********************************************************************************************************
 */
-//     .globl  _frxt_dispatch
-//     .type   _frxt_dispatch,@function
-//     .align  4
-// _frxt_dispatch:
-
-//     #ifdef __XTENSA_CALL0_ABI__
-//     call0   vTaskSwitchContext  // Get next TCB to resume
-//     movi    a2, pxCurrentTCB
-// 	getcoreid a3
-// 	addx4	a2,  a3, a2
-//     #else
-//     call4   vTaskSwitchContext  // Get next TCB to resume
-//     movi    a2, pxCurrentTCB
-// 	getcoreid a3
-// 	addx4	a2,  a3, a2
-//     #endif
-//     l32i    a3,  a2, 0
-//     l32i    sp,  a3, TOPOFSTACK_OFFS     /* SP = next_TCB->pxTopOfStack;  */
-//     s32i    a3,  a2, 0
-
-//     /* Determine the type of stack frame. */
-//     l32i    a2,  sp, XT_STK_EXIT        /* exit dispatcher or solicited flag */
-//     bnez    a2,  .L_frxt_dispatch_stk
-
-// .L_frxt_dispatch_sol:
-
-//     /* Solicited stack frame. Restore minimal context and return from vPortYield(). */
-//     l32i    a3,  sp, XT_SOL_PS
-//     #ifdef __XTENSA_CALL0_ABI__
-//     l32i    a12, sp, XT_SOL_A12
-//     l32i    a13, sp, XT_SOL_A13
-//     l32i    a14, sp, XT_SOL_A14
-//     l32i    a15, sp, XT_SOL_A15
-//     #endif
-//     l32i    a0,  sp, XT_SOL_PC
-//     //暂时不考虑协处理器
-//     // #if XCHAL_CP_NUM > 0
-//     // /* Ensure wsr.CPENABLE is complete (should be, it was cleared on entry). */
-//     // rsync
-//     // #endif
-//     /* As soons as PS is restored, interrupts can happen. No need to sync PS. */
-//     wsr     a3,  PS
-//     #ifdef __XTENSA_CALL0_ABI__
-//     addi    sp,  sp, XT_SOL_FRMSZ
-//     ret
-//     #else
-//     retw
-//     #endif
-
-// .L_frxt_dispatch_stk:
-
-//     //暂时不考虑协处理器
-//     // #if XCHAL_CP_NUM > 0
-//     // /* Restore CPENABLE from task's co-processor save area. */
-//     // movi    a3, pxCurrentTCB            /* cp_state =                       */
-// 	// getcoreid a2
-// 	// addx4	a3,  a2, a3
-//     // l32i    a3, a3, 0
-//     // l32i    a2, a3, CP_TOPOFSTACK_OFFS     /* StackType_t                       *pxStack; */
-//     // l16ui   a3, a2, XT_CPENABLE         /* CPENABLE = cp_state->cpenable;   */
-//     // wsr     a3, CPENABLE
-//     // #endif
-
-//     /* Interrupt stack frame. Restore full context and return to exit dispatcher. */
-//     call0   _xt_context_restore
-
-//     /* In Call0 ABI, restore callee-saved regs (A12, A13 already restored). */
-//     #ifdef __XTENSA_CALL0_ABI__
-//     l32i    a14, sp, XT_STK_A14
-//     l32i    a15, sp, XT_STK_A15
-//     #endif
-
-//     //暂时不考虑协处理器
-//     // #if XCHAL_CP_NUM > 0
-//     // /* Ensure wsr.CPENABLE has completed. */
-//     // rsync
-//     // #endif
-
-//     /*
-//     Must return via the exit dispatcher corresponding to the entrypoint from which
-//     this was called. Interruptee's A0, A1, PS, PC are restored and the interrupt
-//     stack frame is deallocated in the exit dispatcher.
-//     */
-//     l32i    a0, sp, XT_STK_EXIT
-//     ret
-
-
-
 //真正的调度函数
 //类似于 Cortex M 中的 PendSV
     .globl  _frxt_dispatch
@@ -678,36 +430,18 @@ _frxt_dispatch:
     //任务切换涉及两种：一种是在线程上下文切换 一种是中断上下文切换
     //线程上下文切换：通过调用 vPortYield --> 保存上文，关闭中断，清除XT_STK_EXIT --> _frxt_dispatch
     //中断上下文切换：直接置位标志量 rt_thread_switch_interrupt_flag 即可，然后等待下一个 systick 中断到来进行任务调度
-    // movi    a2,  rt_interrupt_to_thread//就绪列表中的最高优先级任务 接下来要调度到这里
-    // l32i    a3,  a2, 0
-    // l32i    sp,  a3, RTT_TOPOFSTACK_OFFS     /* SP = next_TCB->sp;  */
-    // s32i    a3,  a2, 0
-
-
-    //保留之前的 sp 指针
-    // mov     a3,  sp
-
-
     // 切换 sp 指针
     movi    a2,  rt_interrupt_to_thread // 就绪列表中的最高优先级任务的 sp 指针 接下来要调度到这里
     l32i    sp,  a2, 0
 
-    // call4 rt_debug_test2
-    // mov     a3,  sp
-    // l32i    a2,  sp,  XT_STK_EXIT
-    // call4 rt_debug_printf_a2a3
-
-
     /* Determine the type of stack frame. */
     l32i    a2,  sp, XT_STK_EXIT        /* exit dispatcher or solicited flag */
-    // l32i    a2,  a3, XT_STK_EXIT        /* exit dispatcher or solicited flag */
     bnez    a2,  .L_frxt_dispatch_stk
 // 跳转到这里是 XT_STK_EXIT 中没有退出函数
 // 当用户调用 vPortYield 时 会将 XT_STK_EXIT 清零
 // SOL帧 表明这是任务间调度
 .L_frxt_dispatch_sol:
     /* Solicited stack frame. Restore minimal context and return from vPortYield(). */
-    // call4 rt_debug_test1
     l32i    a3,  sp, XT_SOL_PS
     #ifdef __XTENSA_CALL0_ABI__
     l32i    a12, sp, XT_SOL_A12
@@ -734,9 +468,6 @@ _frxt_dispatch:
 // 等恢复下文后直接从 XT_STK_EXIT 退出（一般为 _xt_user_exit 用于还原PC、PS、A0、A1(sp)）
 // STK帧 表明这是由中断引起的调度
 .L_frxt_dispatch_stk:
-
-    //call4 rt_debug_test2
-    //call4   rt_debug_printf_a2
     //暂时不考虑协处理器
     // #if XCHAL_CP_NUM > 0
     // /* Restore CPENABLE from task's co-processor save area. */
@@ -793,37 +524,6 @@ _frxt_dispatch:
     .type   vPortYield,@function
     .align  4
 vPortYield:
-
-//     /* Save a12-13 in the stack frame as required by _xt_context_save. */
-//     s32i    a12, a1, XT_STK_A12
-//     s32i    a13, a1, XT_STK_A13
-//
-//     /* Save return address in a safe place (free a0). */
-//     mov     a12, a0
-//
-//     /* Save the rest of the interrupted context (preserves A12-13). */
-//     call0   _xt_context_save
-//
-//     rsil    a2,  XCHAL_EXCM_LEVEL       /* disable low/med interrupts       */
-//
-//     mov     a0,  a12                    /* restore return addr and return  */
-//
-//     /* Tail-call dispatcher. */
-//     call0   _frxt_dispatch
-//     /* Never reaches here. */
-
-
-    // call4   rt_debug_test1
-
-    // mov     a2,  sp
-    // call4   rt_debug_printf_a2
-
-    // #ifdef __XTENSA_CALL0_ABI__
-    // call0   rt_find_from_thread  // Get from TCB to resume
-    // #else
-    // call4   rt_find_from_thread  // Get from TCB to resume
-    // #endif
-
     // 任务间调度只需用 SOL 帧保存即可
     #ifdef __XTENSA_CALL0_ABI__
     addi    sp,  sp, -XT_SOL_FRMSZ
@@ -871,55 +571,11 @@ vPortYield:
     // 将 XT_SOL_EXIT 置0
     // _frxt_dispatch 中根据该位置来区分这是 SOL 帧
     // 这里应该是过的 from 线程的 TCB 并修改其中的 sp 指针
-
-    // #ifdef __XTENSA_CALL0_ABI__
-    // call0   vTaskSwitchContext  // Get next TCB to resume
-    // movi    a2, pxCurrentTCB
-	// getcoreid a3
-	// addx4	a2,  a3, a2
-    // #else
-    // call4   vTaskSwitchContext  // Get next TCB to resume
-    // movi    a2, pxCurrentTCB
-	// getcoreid a3
-	// addx4	a2,  a3, a2
-    // #endif
-
-    // #ifdef __XTENSA_CALL0_ABI__
-    // call0   rt_find_from_thread  // Get from TCB to resume
-    // #else
-    // call4   rt_find_from_thread  // Get from TCB to resume
-    // #endif
-
     movi    a2,  from_thread
-    // movi    a2,  rt_from_thread
-    // movi    a2,  rt_interrupt_from_thread
     l32i    a2,  a2, 0                  /* a2 = current TCB                */
     movi    a3,  0
     s32i    a3,  sp, XT_SOL_EXIT        /* 0 to flag as solicited frame     */  //把 0写到 栈中 XT_SOL_EXIT 位置 使返回函数为空 这里是为了之后调度进 .L_frxt_dispatch_sol 分支进行准备
-    s32i    sp,  a2, RTT_TOPOFSTACK_OFFS    /* pxCurrentTCB->pxTopOfStack = SP  */  //这里或许可以不用保存 sp ？
-
-
-
-
-    // movi    a2,  rt_current_thread
-    // // movi    a2,  rt_interrupt_from_thread
-    // l32i    a2,  a2, 0                  /* a2 = current TCB                */
-    // movi    a3,  0
-    // s32i    a3,  sp, XT_SOL_EXIT        /* 0 to flag as solicited frame     */  //把 0写到 栈中 XT_SOL_EXIT 位置 使返回函数为空 这里是为了之后调度进 .L_frxt_dispatch_sol 分支进行准备
-    // s32i    sp,  a2, RTT_TOPOFSTACK_OFFS    /* pxCurrentTCB->pxTopOfStack = SP  */  //这里或许可以不用保存 sp ？
-
-
-    // movi    a2,  rt_interrupt_from_thread
-    // // l32i    a2,  a2, 0 // a2 = rt_interrupt_from_thread
-    // s32i    sp,  a2, 0 // 改写 rt_thread 中的 sp 指针到 sol 帧的位置
-    // movi    a3,  0
-    // s32i    a3,  sp, XT_SOL_EXIT        /* 0 to flag as solicited frame     */  //把 0写到 栈中 XT_SOL_EXIT 位置 使返回函数为空 这里是为了之后调度进 .L_frxt_dispatch_sol 分支进行准备
-
-
-    // mov     a2,  sp
-    // call4   rt_debug_printf_a2
-
-    // call4   rt_debug_test1
+    s32i    sp,  a2, RTT_TOPOFSTACK_OFFS    /* pxCurrentTCB->pxTopOfStack = SP  */
 
     // 暂不考虑协处理器
 //     #if XCHAL_CP_NUM > 0
@@ -987,47 +643,6 @@ vPortYieldFromInt:
     RET(16)
     #endif
 
-
-
-
-//中断中调用
-//调度切换
-//该函数应该只改变一个标志位、设置to和from线程 真正的上下文切换还得交给其他函数
-/*
- * void rt_hw_context_switch(rt_uint32 from, rt_uint32 to);
- * R0 --> from
- * R1 --> to
- */
-//     .globl  rt_hw_context_switch_interrupt
-//     .type   rt_hw_context_switch_interrupt,@function
-//     .align  4
-// rt_hw_context_switch_interrupt:
-
-//     ENTRY(16)
-
-//     #if XCHAL_CP_NUM > 0
-//     /* Save CPENABLE in task's co-processor save area, and clear CPENABLE.  */
-//     movi    a3, pxCurrentTCB            /* cp_state =                       */
-// 	getcoreid a2
-// 	addx4	a3,  a2, a3
-//     l32i    a3, a3, 0
-
-//     l32i    a2, a3, CP_TOPOFSTACK_OFFS
-
-//     rsr     a3, CPENABLE
-//     s16i    a3, a2, XT_CPENABLE         /* cp_state->cpenable = CPENABLE;   */
-//     movi    a3, 0
-//     wsr     a3, CPENABLE                /* disable all co-processors        */
-//     #endif
-
-//     #ifdef __XTENSA_CALL0_ABI__
-//     /* Tail-call dispatcher. */
-//     call0   _frxt_dispatch
-//     /* Never reaches here. */
-//     #else
-//     RET(16)
-//     #endif
-
 /*
 **********************************************************************************************************
 *                                        _frxt_task_coproc_state
@@ -1043,37 +658,6 @@ vPortYieldFromInt:
 **********************************************************************************************************
 */
 #if XCHAL_CP_NUM > 0
-
-//     .globl  _frxt_task_coproc_state
-//     .type   _frxt_task_coproc_state,@function
-//     .align  4
-// _frxt_task_coproc_state:
-
-
-// 	/* We can use a3 as a scratchpad, the instances of code calling XT_RTOS_CP_STATE don't seem to need it saved. */
-// 	getcoreid a3
-//     movi    a15, port_xSchedulerRunning /* if (port_xSchedulerRunning              */
-// 	addx4	a15, a3,a15
-//     l32i    a15, a15, 0
-//     beqz    a15, 1f
-//     movi    a15, port_interruptNesting  /* && port_interruptNesting == 0           */
-// 	addx4	a15, a3, a15
-//     l32i    a15, a15, 0
-//     bnez    a15, 1f
-
-//     movi    a15, pxCurrentTCB
-// 	addx4	a15, a3, a15
-//     l32i    a15, a15, 0                 /* && pxCurrentTCB != 0) {                 */
-
-
-//     beqz    a15, 2f
-//     l32i    a15, a15, CP_TOPOFSTACK_OFFS
-//     ret
-
-// 1:  movi    a15, 0
-// 2:  ret
-
-
 // a15 返回一个指向当前任务的协处理器状态保存区的指针
 // 协处理器暂不考虑 这里直接返回 0
     .globl  _frxt_task_coproc_state

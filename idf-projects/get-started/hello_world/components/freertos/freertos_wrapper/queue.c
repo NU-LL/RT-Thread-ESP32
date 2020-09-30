@@ -13,7 +13,8 @@
 
 
 struct QueueSet{
-    rt_mq_t mq;
+    // rt_mq_t mq;
+    struct rt_ipc_object parent;
     //队列集合
     rt_mq_t *mq_buff;//存放队列指针的数组
     rt_uint16_t now;//现在空闲的数组的偏移
@@ -94,29 +95,49 @@ typedef struct QueueSet *QueueSet_t;
  */
 BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition )
 {
-    rt_mq_t mq = (rt_mq_t) xQueue;
-
-
-
-    // rt_mq_send_wait();//3.1.3 nano 版本中暂无该函数
-
-    if(xCopyPosition == queueSEND_TO_BACK)
+    // rt_kprintf("mq name: %s xCopyPosition:%d buff:0x%08x\n", mq->parent.parent.name, xCopyPosition, pvItemToQueue);
+    switch( rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)) )
     {
-        if(rt_mq_send(mq, pvItemToQueue, mq->msg_size) == RT_EOK)
-            return pdPASS;
+        case RT_Object_Class_Semaphore:
+            if(rt_sem_release((rt_sem_t)xQueue) == RT_EOK)
+                return pdPASS;
+        break;
+        case RT_Object_Class_Mutex:
+            if(rt_interrupt_get_nest())
+            {
+                // 中断中不能用互斥量
+                rt_kprintf("error: mutex [%s] release in interrupt !!!\n", ((rt_mutex_t)xQueue)->parent.parent.name);
+                return errQUEUE_FULL;
+            }else
+            {
+                if(rt_mutex_release((rt_mutex_t)xQueue) == RT_EOK)
+                    return pdPASS;
+            }
+        break;
+        case RT_Object_Class_MessageQueue:
+            // rt_mq_send_wait();//3.1.3 nano 版本中暂无该函数
+            if(xCopyPosition == queueSEND_TO_BACK)
+            {
+                if(rt_mq_send((rt_mq_t) xQueue, pvItemToQueue, ((rt_mq_t) xQueue)->msg_size) == RT_EOK)
+                    return pdPASS;
+            }
+            else if(xCopyPosition == queueSEND_TO_FRONT)
+            {
+                if(rt_mq_urgent((rt_mq_t) xQueue, pvItemToQueue, ((rt_mq_t) xQueue)->msg_size) == RT_EOK)
+                    return pdPASS;
+            }
+            else if(xCopyPosition == queueOVERWRITE)
+            {
+                //仅用于长度为1的队列--所以队列要么空，要么满（xQueueOverwrite函数的实现）
+                if(rt_mq_send((rt_mq_t) xQueue, pvItemToQueue, ((rt_mq_t) xQueue)->msg_size) == RT_EOK)
+                    return pdPASS;
+            }
+        break;
+        default:
+            rt_kprintf("[%s] send delete type: %d error!!!\n", ((rt_sem_t)xQueue)->parent.parent.name, rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)));
+            return errQUEUE_FULL;
+        break;
     }
-    else if(xCopyPosition == queueSEND_TO_FRONT)
-    {
-        if(rt_mq_urgent(mq, pvItemToQueue, mq->msg_size) == RT_EOK)
-            return pdPASS;
-    }
-    else if(xCopyPosition == queueOVERWRITE)
-    {
-        //仅用于长度为1的队列--所以队列要么空，要么满（xQueueOverwrite函数的实现）  这里不实现 可能会有bug   ！！需要实现 iic 会用到！！
-        if(rt_mq_send(mq, pvItemToQueue, mq->msg_size) == RT_EOK)
-            return pdPASS;
-    }
-
     return errQUEUE_FULL;
 }
 
@@ -146,6 +167,7 @@ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQ
 BaseType_t xQueuePeekFromISR( QueueHandle_t xQueue,  void * const pvBuffer )
 {
     //暂时不实现
+    rt_kprintf("error : xQueuePeekFromISR not implemented!!!\n\n");
     return pdTRUE;
 }
 
@@ -236,13 +258,36 @@ BaseType_t xQueuePeekFromISR( QueueHandle_t xQueue,  void * const pvBuffer )
  */
 BaseType_t xQueueGenericReceive( QueueHandle_t xQueue, void * const pvBuffer, TickType_t xTicksToWait, const BaseType_t xJustPeeking )
 {
-    rt_mq_t mq = (rt_mq_t) xQueue;
-
     //暂未实现 xJustPeeking == true的情况
     if(xJustPeeking == pdFALSE)
     {
-        if(rt_mq_recv(mq, pvBuffer, mq->msg_size, xTicksToWait) == RT_EOK)
-            return pdTRUE;
+        switch( rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)) )
+        {
+            case RT_Object_Class_Semaphore:
+                if(rt_sem_take((rt_sem_t)xQueue, xTicksToWait) == RT_EOK)
+                    return pdPASS;
+            break;
+            case RT_Object_Class_Mutex:
+                if(rt_interrupt_get_nest())
+                {
+                    // 中断中不能用互斥量
+                    rt_kprintf("error: mutex [%s] take in interrupt !!!\n", ((rt_mutex_t)xQueue)->parent.parent.name);
+                    return pdFALSE;
+                }else
+                {
+                    if(rt_mutex_take((rt_mutex_t)xQueue, xTicksToWait) == RT_EOK)
+                        return pdPASS;
+                }
+            break;
+            case RT_Object_Class_MessageQueue:
+                if(rt_mq_recv((rt_mq_t) xQueue, pvBuffer, ((rt_mq_t) xQueue)->msg_size, xTicksToWait) == RT_EOK)
+                    return pdTRUE;
+            break;
+            default:
+                rt_kprintf("[%s] get type: %d error!!!\n", ((rt_sem_t)xQueue)->parent.parent.name, rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)));
+                return pdFALSE;
+            break;
+        }
     }
     return pdFALSE;
 }
@@ -259,17 +304,22 @@ BaseType_t xQueueGenericReceive( QueueHandle_t xQueue, void * const pvBuffer, Ti
  */
 UBaseType_t uxQueueMessagesWaiting( const QueueHandle_t xQueue )
 {
-    // register rt_ubase_t temp;
-    // UBaseType_t res;
-
-    rt_mq_t mq = (rt_mq_t) xQueue;
-
-    // /* disable interrupt */
-    // temp = rt_hw_interrupt_disable();
-    // res = mq->entry;
-    // rt_hw_interrupt_enable(temp);
-
-    return mq->entry;
+    switch( rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)) )
+    {
+        case RT_Object_Class_Semaphore:
+            return ((rt_sem_t)xQueue)->value;
+        break;
+        case RT_Object_Class_Mutex:
+            return ((rt_mutex_t)xQueue)->value;
+        break;
+        case RT_Object_Class_MessageQueue:
+            return ((rt_mq_t)xQueue)->entry;
+        break;
+        default:
+            rt_kprintf("[%s] in uxQueueMessagesWaiting error, type: %d !!!\n", ((rt_sem_t)xQueue)->parent.parent.name, rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)));
+            return 0;
+        break;
+    }
 }
 
 /**
@@ -283,8 +333,16 @@ UBaseType_t uxQueueMessagesWaiting( const QueueHandle_t xQueue )
  */
 UBaseType_t uxQueueSpacesAvailable( const QueueHandle_t xQueue )
 {
-    rt_mq_t mq = (rt_mq_t) xQueue;
-    return (mq->max_msgs - mq->entry);
+    switch( rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)) )
+    {
+        case RT_Object_Class_MessageQueue:
+            return (((rt_mq_t)xQueue)->max_msgs - ((rt_mq_t)xQueue)->entry);
+        break;
+        default:
+            rt_kprintf("[%s] in uxQueueSpacesAvailable error, type: %d !!!\n", ((rt_sem_t)xQueue)->parent.parent.name, rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)));
+            return 0;
+        break;
+    }
 }
 
 /**
@@ -297,8 +355,37 @@ UBaseType_t uxQueueSpacesAvailable( const QueueHandle_t xQueue )
  */
 void vQueueDelete( QueueHandle_t xQueue )
 {
-    rt_mq_t mq = (rt_mq_t) xQueue;
-    rt_mq_delete(mq);//仅用于动态分配的 静态的暂时未支持
+    rt_uint16_t idx = 0;
+    // 该函数用作删除信号量、互斥量 或者 消息队列
+    // 仅用于动态分配的 静态的暂时未支持
+    switch( rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)) )
+    {
+        case RT_Object_Class_Semaphore:
+            // rt_kprintf("delete sem [%s]\n", ((rt_sem_t)xQueue)->parent.parent.name);
+            rt_sem_delete((rt_sem_t)xQueue);
+        break;
+        case RT_Object_Class_Mutex:
+            // rt_kprintf("delete mutex [%s]\n", ((rt_sem_t)xQueue)->parent.parent.name);
+            rt_mutex_delete((rt_mutex_t)xQueue);
+        break;
+        case RT_Object_Class_MessageQueue:
+            // rt_kprintf("delete messagequeue [%s]\n", ((rt_sem_t)xQueue)->parent.parent.name);
+            rt_mq_delete((rt_mq_t) xQueue);
+        break;
+        case RT_Object_Class_Unknown://暂定为队列集
+            // rt_kprintf("delete queueset [%s]\n", ((rt_sem_t)xQueue)->parent.parent.name);
+            //遍历
+            for(idx = 0; idx < ((QueueSet_t)xQueue)->now; idx++)
+            {
+                rt_mq_delete((rt_mq_t)(((QueueSet_t)xQueue)->mq_buff[idx]));
+            }
+            rt_free(((QueueSet_t)xQueue)->mq_buff);
+            rt_free(((QueueSet_t)xQueue));
+        break;
+        default:
+            rt_kprintf("[%s] delete type: %d error!!!\n", ((rt_sem_t)xQueue)->parent.parent.name, rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)));
+        break;
+    }
 }
 
 
@@ -505,12 +592,15 @@ BaseType_t xQueueTakeFromISR( QueueHandle_t xQueue, BaseType_t * const pxHigherP
 BaseType_t xQueueReceiveFromISR( QueueHandle_t xQueue, void * const pvBuffer, BaseType_t * const pxHigherPriorityTaskWoken )
 {
     //从队列中获得消息
-    rt_mq_t mq = (rt_mq_t) xQueue;
+    // rt_mq_t mq = (rt_mq_t) xQueue;
+
+    // *pxHigherPriorityTaskWoken = pdFALSE;
+    // if(RT_EOK == rt_mq_recv(mq, pvBuffer, mq->msg_size, 0))
+    //     return pdTRUE;
+    // return pdFALSE;
 
     *pxHigherPriorityTaskWoken = pdFALSE;
-    if(RT_EOK == rt_mq_recv(mq, pvBuffer, mq->msg_size, 0))
-        return pdTRUE;
-    return pdFALSE;
+    return xQueueGenericReceive(xQueue, pvBuffer, 0, pdFALSE);
 }
 
 /**@{*/
@@ -519,9 +609,7 @@ BaseType_t xQueueReceiveFromISR( QueueHandle_t xQueue, void * const pvBuffer, Ba
  */
 BaseType_t xQueueIsQueueEmptyFromISR( QueueHandle_t xQueue )
 {
-    rt_mq_t mq = (rt_mq_t) xQueue;
-
-    if(mq->entry)
+    if(uxQueueMessagesWaiting(xQueue) > 0)
         return pdFALSE;
     else
         return pdTRUE;
@@ -530,18 +618,24 @@ BaseType_t xQueueIsQueueEmptyFromISR( QueueHandle_t xQueue )
 
 BaseType_t xQueueIsQueueFullFromISR( QueueHandle_t xQueue )
 {
-    rt_mq_t mq = (rt_mq_t) xQueue;
-
-    if(mq->entry >= mq->max_msgs)
-        return pdTRUE;
-    else
-        return pdFALSE;
+    switch( rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)) )
+    {
+        case RT_Object_Class_MessageQueue:
+            if( (((rt_mq_t)xQueue)->entry >= ((rt_mq_t)xQueue)->max_msgs) )
+                return pdTRUE;
+            else
+                return pdFALSE;
+        break;
+        default:
+            rt_kprintf("[%s] in xQueueIsQueueFullFromISR error, type: %d !!!\n", ((rt_sem_t)xQueue)->parent.parent.name, rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)));
+            return 0;
+        break;
+    }
 }
 
 UBaseType_t uxQueueMessagesWaitingFromISR( const QueueHandle_t xQueue )
 {
-    rt_mq_t mq = (rt_mq_t) xQueue;
-    return mq->entry;
+    return uxQueueMessagesWaiting(xQueue);
 }
 
 /**@}*/
@@ -606,7 +700,7 @@ UBaseType_t uxQueueMessagesWaitingFromISR( const QueueHandle_t xQueue )
         //宏 xSemaphoreCreateMutex xSemaphoreCreateRecursiveMutex 的实现
         static rt_uint16_t idx = 0;
         char namebuf[16] = {0};
-        sprintf( namebuf, "mutex_%02d", idx);
+        sprintf( namebuf, "qmux_%02d", idx);
         idx++;
         return rt_mutex_create(namebuf, RT_IPC_FLAG_FIFO);
     }
@@ -624,7 +718,7 @@ UBaseType_t uxQueueMessagesWaitingFromISR( const QueueHandle_t xQueue )
         //宏 xSemaphoreCreateCounting 的实现
         static rt_uint16_t idx = 0;
         char namebuf[16] = {0};
-        sprintf( namebuf, "sem_%02d", idx);
+        sprintf( namebuf, "qsem_%02d", idx);
         idx++;
         return rt_sem_create(namebuf, uxMaxCount-uxInitialCount, RT_IPC_FLAG_FIFO);//最大值-初值
     }
@@ -643,48 +737,20 @@ UBaseType_t uxQueueMessagesWaitingFromISR( const QueueHandle_t xQueue )
 	void* xQueueGetMutexHolder( QueueHandle_t xSemaphore )//获得互斥量
 	{
         //宏 xSemaphoreGetMutexHolder 的实现
-        rt_mutex_t mutex = (rt_mutex_t) xSemaphore;
-        return mutex->owner;
+        // rt_mutex_t mutex = (rt_mutex_t) xSemaphore;
+        // return mutex->owner;
+        switch( rt_object_get_type(&(((rt_sem_t)xSemaphore)->parent.parent)) )
+        {
+            case RT_Object_Class_Mutex:
+                return ((rt_mutex_t)xSemaphore)->owner;
+            break;
+            default:
+                // rt_kprintf("[%s] in xQueueGetMutexHolder error, type: %d !!!\n", ((rt_sem_t)xSemaphore)->parent.parent.name, rt_object_get_type(&(((rt_sem_t)xSemaphore)->parent.parent)));
+                return NULL;
+            break;
+        }
     }
 #endif
-
-
-// freertos中无论二进制信号量、计数信号量还是互斥量，它们都使用相同的获取和释放API函数
-// 这里是释放（不带中断保护）
-// 所以这里需要区分是互斥量还是信号量
-BaseType_t xsemaphore_give(QueueHandle_t xSemaphore)
-{
-    //互斥量和信号量第一个元素均为IPC的基类 struct rt_ipc_object，所以这里可以强转获得类型
-    if(rt_object_get_type(&(((rt_sem_t)xSemaphore)->parent.parent)) == RT_Object_Class_Semaphore)
-    {
-        return (rt_sem_release((rt_sem_t)(xSemaphore)) == RT_EOK)?pdTRUE:pdFALSE;
-    }else if(rt_object_get_type(&(((rt_mutex_t)xSemaphore)->parent.parent)) == RT_Object_Class_Mutex)
-    {
-        return (rt_mutex_release((rt_mutex_t)(xSemaphore)) == RT_EOK)?pdTRUE:pdFALSE;
-    }
-    // 到了这里肯定是错的
-    rt_kprintf("type error!!! code: %d\n", ((rt_sem_t)xSemaphore)->parent.parent.type);
-    RT_ASSERT(0);
-    return pdFALSE;
-}
-// freertos中无论二进制信号量、计数信号量还是互斥量，它们都使用相同的获取和释放API函数
-// 这里是获取（不带中断保护）
-// 所以这里需要区分是互斥量还是信号量
-BaseType_t xsemaphore_take(QueueHandle_t xSemaphore, TickType_t xBlockTime)
-{
-    //互斥量和信号量第一个元素均为IPC的基类 struct rt_ipc_object，所以这里可以强转获得类型
-    if(rt_object_get_type(&(((rt_sem_t)xSemaphore)->parent.parent)) == RT_Object_Class_Semaphore)
-    {
-        return (rt_sem_take((rt_sem_t)xSemaphore, xBlockTime)==RT_EOK)?pdTRUE:pdFALSE;
-    }else if(rt_object_get_type(&(((rt_mutex_t)xSemaphore)->parent.parent)) == RT_Object_Class_Mutex)
-    {
-        return (rt_mutex_take((rt_mutex_t)(xSemaphore), xBlockTime) == RT_EOK)?pdTRUE:pdFALSE;
-    }
-    // 到了这里肯定是错的
-    rt_kprintf("type error!!! code: %d\n", ((rt_sem_t)xSemaphore)->parent.parent.type);
-    RT_ASSERT(0);
-    return pdFALSE;
-}
 
 /*
  * For internal use only.  Use xSemaphoreTakeMutexRecursive() or
@@ -778,11 +844,35 @@ BaseType_t xsemaphore_take(QueueHandle_t xSemaphore, TickType_t xBlockTime)
 #if( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
     QueueHandle_t xQueueGenericCreate( const UBaseType_t uxQueueLength, const UBaseType_t uxItemSize, const uint8_t ucQueueType )//长度 大小 类型(queueQUEUE_TYPE_BASE 调试时会用到 暂未实现)
 	{
-        static rt_uint16_t idx = 0;
+        static rt_uint16_t mq_idx = 0;
+        static rt_uint16_t mutex_idx = 0;
+        static rt_uint16_t sem_idx = 0;
+
         char namebuf[16] = {0};
-        sprintf( namebuf, "mq_%02d", idx);
-        idx++;
-        return rt_mq_create(namebuf, (rt_size_t)uxItemSize, (rt_size_t)uxQueueLength, RT_IPC_FLAG_FIFO);
+        // rt_kprintf("xQueueGenericCreate type=%d\n", ucQueueType);queueQUEUE_TYPE_BASE
+
+        switch(ucQueueType)
+        {
+            case queueQUEUE_TYPE_BASE:// queueQUEUE_TYPE_SET
+                sprintf( namebuf, "mq_%02d", mq_idx);
+                mq_idx++;
+                return rt_mq_create(namebuf, (rt_size_t)uxItemSize, (rt_size_t)uxQueueLength, RT_IPC_FLAG_FIFO);
+            break;
+            case queueQUEUE_TYPE_MUTEX:
+            case queueQUEUE_TYPE_RECURSIVE_MUTEX:
+                sprintf( namebuf, "mux_%02d", mutex_idx);
+                mutex_idx++;
+                return rt_mutex_create(namebuf, RT_IPC_FLAG_FIFO);
+            break;
+            case queueQUEUE_TYPE_COUNTING_SEMAPHORE:
+            case queueQUEUE_TYPE_BINARY_SEMAPHORE:
+                sprintf( namebuf, "sem_%02d", sem_idx);
+                sem_idx++;
+                return rt_sem_create(namebuf, uxQueueLength, RT_IPC_FLAG_FIFO);
+            break;
+        }
+        // 不可能到这里
+        return NULL;
     }
 #endif
 
@@ -856,10 +946,18 @@ BaseType_t xsemaphore_take(QueueHandle_t xSemaphore, TickType_t xBlockTime)
         QueueSetHandle_t pxQueue;
         QueueSet_t Queue_set = rt_malloc(sizeof(struct QueueSet));
 
-        // pxQueue = xQueueGenericCreate( uxEventQueueLength, sizeof( Queue_t * ), queueQUEUE_TYPE_SET );
-        pxQueue = xQueueGenericCreate( uxEventQueueLength, sizeof(rt_mq_t), queueQUEUE_TYPE_SET );//申请 rt_mq_t
+        static rt_uint16_t idx = 0;
+        char namebuf[16] = {0};
+        sprintf( namebuf, "qset_%02d", idx);
+        idx++;
+        rt_strncpy(Queue_set->parent.parent.name, namebuf, RT_NAME_MAX);
+        Queue_set->parent.parent.type = RT_Object_Class_Unknown;//定为队列集
 
-        Queue_set->mq = pxQueue;
+
+        // pxQueue = xQueueGenericCreate( uxEventQueueLength, sizeof( Queue_t * ), queueQUEUE_TYPE_SET );
+        // pxQueue = xQueueGenericCreate( uxEventQueueLength, sizeof(rt_mq_t), queueQUEUE_TYPE_SET );//申请 rt_mq_t
+
+        // Queue_set->mq = pxQueue;
         Queue_set->mq_buff = rt_malloc(uxEventQueueLength*sizeof(rt_mq_t));
         Queue_set->max = uxEventQueueLength;
         Queue_set->now = 0;
@@ -1070,8 +1168,14 @@ BaseType_t xsemaphore_take(QueueHandle_t xSemaphore, TickType_t xBlockTime)
 BaseType_t xQueueGenericReset( QueueHandle_t xQueue, BaseType_t xNewQueue )//pdFALSE
 {
     rt_mq_t mq = (rt_mq_t) xQueue;
-    if(RT_EOK == rt_mq_control(mq, RT_IPC_CMD_RESET, RT_NULL))
-        return pdPASS;
+    if(rt_object_get_type(&(((rt_sem_t)xQueue)->parent.parent)) == RT_Object_Class_MessageQueue)
+    {
+        if(RT_EOK == rt_mq_control(mq, RT_IPC_CMD_RESET, RT_NULL))
+            return pdPASS;
+    }else
+    {
+        rt_kprintf("reset queue [%s] failed!!! type: %d", ((rt_mq_t) xQueue)->parent.parent.name, ((rt_mq_t) xQueue)->parent.parent.type);
+    }
     return pdFAIL;
 }
 

@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/CMakeFiles/mconf-idf"
+			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/CMakeFiles/mconf-idf"
 		},
 		{
-			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/CMakeFiles/mconf-idf.rule"
+			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/CMakeFiles/mconf-idf.rule"
 		},
 		{
-			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/CMakeFiles/mconf-idf-complete.rule"
+			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/CMakeFiles/mconf-idf-complete.rule"
 		},
 		{
-			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install.rule"
+			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install.rule"
 		},
 		{
-			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir.rule"
+			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir.rule"
 		},
 		{
-			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download.rule"
+			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download.rule"
 		},
 		{
-			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update.rule"
+			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update.rule"
 		},
 		{
-			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch.rule"
+			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch.rule"
 		},
 		{
-			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure.rule"
+			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure.rule"
 		},
 		{
-			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build.rule"
+			"file" : "/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build.rule"
 		}
 	],
 	"target" : 

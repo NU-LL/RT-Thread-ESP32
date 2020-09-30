@@ -1,6 +1,6 @@
 /* Automatically generated file; DO NOT EDIT */
 /* Espressif IoT Development Framework Linker Script */
-/* Generated from: /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/ld/esp32.project.ld.in */
+/* Generated from: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/components/esp32/ld/esp32.project.ld.in */
 
 /*  Default entry point:  */
 ENTRY(call_start_cpu0);
@@ -334,7 +334,7 @@ SECTIONS
 
     *(EXCLUDE_FILE(*libsoc.a:rtc_clk.* *libsoc.a:spi_flash_hal_iram.* *libgcc.a:_divsf3.* *libapp_trace.a:SEGGER_SYSVIEW_FreeRTOS.* *libapp_trace.a:SEGGER_RTT_esp32.* *libapp_trace.a:app_trace_util.* *libapp_trace.a:app_trace.* *libapp_trace.a:SEGGER_SYSVIEW.* *libapp_trace.a:SEGGER_SYSVIEW_Config_FreeRTOS.* *libesp32.a:panic.* *libspi_flash.a:memspi_host_driver.* *libspi_flash.a:spi_flash_chip_generic.* *libspi_flash.a:spi_flash_chip_gd.* *libspi_flash.a:spi_flash_chip_issi.* *libphy.a *libheap.a:multi_heap.* *libheap.a:multi_heap_poisoning.* *libnewlib.a:heap.* *libgcov.a *libesp_gdbstub.a) .rodata EXCLUDE_FILE(*libsoc.a:rtc_clk.* *libsoc.a:spi_flash_hal_iram.* *libgcc.a:_divsf3.* *libapp_trace.a:SEGGER_SYSVIEW_FreeRTOS.* *libapp_trace.a:SEGGER_RTT_esp32.* *libapp_trace.a:app_trace_util.* *libapp_trace.a:app_trace.* *libapp_trace.a:SEGGER_SYSVIEW.* *libapp_trace.a:SEGGER_SYSVIEW_Config_FreeRTOS.* *libesp32.a:panic.* *libspi_flash.a:memspi_host_driver.* *libspi_flash.a:spi_flash_chip_generic.* *libspi_flash.a:spi_flash_chip_gd.* *libspi_flash.a:spi_flash_chip_issi.* *libphy.a *libheap.a:multi_heap.* *libheap.a:multi_heap_poisoning.* *libnewlib.a:heap.* *libgcov.a *libesp_gdbstub.a *libesp_event.a:esp_event.* *libesp_event.a:default_event_loop.*) .rodata.*)
     *libesp_event.a:default_event_loop.*(.rodata.esp_system_event_debug.str1.4 .rodata.esp_event_loop_create_default.str1.4 .rodata.esp_event_send_to_default_loop)
-    *libesp_event.a:esp_event.*(.rodata.handler_instances_add.str1.4 .rodata.base_node_add_handler.str1.4 .rodata.loop_node_add_handler.str1.4 .rodata.esp_event_loop_create.str1.4 .rodata.esp_event_loop_run.str1.4 .rodata.esp_event_loop_run_task.str1.4 .rodata.esp_event_handler_register_with.str1.4 .rodata.esp_event_handler_unregister_with.str1.4 .rodata.__func__$7061 .rodata.__func__$7048 .rodata.__func__$7028 .rodata.__func__$7012 .rodata.__func__$6989 .rodata.__func__$6948 .rodata.__func__$6939)
+    *libesp_event.a:esp_event.*(.rodata.handler_instances_add.str1.4 .rodata.base_node_add_handler.str1.4 .rodata.loop_node_add_handler.str1.4 .rodata.esp_event_loop_create.str1.4 .rodata.esp_event_loop_run.str1.4 .rodata.esp_event_loop_run_task.str1.4 .rodata.esp_event_handler_register_with.str1.4 .rodata.esp_event_handler_unregister_with.str1.4 .rodata.__func__$7784 .rodata.__func__$7771 .rodata.__func__$7751 .rodata.__func__$7735 .rodata.__func__$7712 .rodata.__func__$7671 .rodata.__func__$7662)
 
     *(.irom1.text) /* catch stray ICACHE_RODATA_ATTR */
     *(.gnu.linkonce.r.*)
@@ -359,6 +359,37 @@ SECTIONS
     KEEP (*(EXCLUDE_FILE (*crtend.*) .dtors))
     KEEP (*(SORT(.dtors.*)))
     KEEP (*(.dtors))
+
+    /* *(.rti_fn*)  */
+    /* rt-thread init code */
+    /* section information for initial. */
+    . = ALIGN(4);
+    __rt_init_start = .;
+    KEEP(*(SORT(.rti_fn*)))
+    /* KEEP(*(SORT(.rti_fn.0)))
+    KEEP(*(SORT(.rti_fn.0.end)))
+    KEEP(*(SORT(.rti_fn.1)))
+    KEEP(*(SORT(.rti_fn.1.end)))
+    KEEP(*(SORT(.rti_fn.2)))
+    KEEP(*(SORT(.rti_fn.3)))
+    KEEP(*(SORT(.rti_fn.4)))
+    KEEP(*(SORT(.rti_fn.5)))
+    KEEP(*(SORT(.rti_fn.6)))
+    KEEP(*(SORT(.rti_fn.6.end))) */
+
+    /* KEEP(*(SORT(.rti_fn.6.end)))
+    KEEP(*(SORT(.rti_fn.6)))
+    KEEP(*(SORT(.rti_fn.5)))
+    KEEP(*(SORT(.rti_fn.4)))
+    KEEP(*(SORT(.rti_fn.3)))
+    KEEP(*(SORT(.rti_fn.2)))
+    KEEP(*(SORT(.rti_fn.1.end)))
+    KEEP(*(SORT(.rti_fn.1)))
+    KEEP(*(SORT(.rti_fn.0.end)))
+    KEEP(*(SORT(.rti_fn.0))) */
+    __rt_init_end = .;
+    . = ALIGN(4);
+
     /*  C++ exception handlers table:  */
     __XT_EXCEPTION_DESCS_ = ABSOLUTE(.);
     *(.xt_except_desc)

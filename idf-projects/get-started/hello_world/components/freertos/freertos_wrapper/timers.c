@@ -427,6 +427,7 @@ BaseType_t xTimerIsTimerActive( TimerHandle_t xTimer )
 	TaskHandle_t xTimerGetTimerDaemonTaskHandle( void )
 	{
 		//暂时不实现
+        rt_kprintf("error : xTimerGetTimerDaemonTaskHandle not implemented!!!\n\n");
 	}
 #endif
 
@@ -681,6 +682,7 @@ BaseType_t xTimerGenericCommand( TimerHandle_t xTimer, const BaseType_t xCommand
 	BaseType_t xTimerPendFunctionCall( PendedFunction_t xFunctionToPend, void *pvParameter1, uint32_t ulParameter2, TickType_t xTicksToWait )
 	{
         //暂时不实现
+        rt_kprintf("error : xTimerPendFunctionCall not implemented!!!\n\n");
         return pdPASS;
 	}
 #endif /* INCLUDE_xTimerPendFunctionCall */

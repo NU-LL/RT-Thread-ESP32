@@ -75,12 +75,6 @@ rt_uint8_t *rt_hw_stack_init(void       *tentry,
                              void       *parameter,
                              rt_uint8_t *stack_addr,
                              void       *texit) //线程退出地址，即rt_thread_exit，暂时未考虑
-// rt_uint8_t *rt_hw_stack_init(rt_uint8_t *stack_addr,void *tentry,void *parameter,void *texit)
-// #if portUSING_MPU_WRAPPERS
-// StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t pxCode, void *pvParameters, BaseType_t xRunPrivileged )
-// #else
-// StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t pxCode, void *pvParameters )
-// #endif
 {
 	StackType_t *sp, *tp;
 	XtExcFrame  *frame;
@@ -113,11 +107,11 @@ rt_uint8_t *rt_hw_stack_init(void       *tentry,
 	frame = (XtExcFrame *) sp;
 
 	/* Explicitly initialize certain saved registers */
-	// #if CONFIG_FREERTOS_TASK_FUNCTION_WRAPPER
-	// frame->pc	= (UBaseType_t) vPortTaskWrapper;	/* task wrapper						*/
-	// #else
+	#if CONFIG_FREERTOS_TASK_FUNCTION_WRAPPER
+	frame->pc	= (UBaseType_t) vPortTaskWrapper;	/* task wrapper						*/
+	#else
 	frame->pc   = (UBaseType_t) tentry;				/* task entrypoint					*/
-	// #endif
+	#endif
 	frame->a0	= 0;								/* to terminate GDB backtrace		*/
 	frame->a1	= (UBaseType_t) sp + XT_STK_FRMSZ;	/* physical top of stack frame		*/
 	frame->exit = (UBaseType_t) _xt_user_exit;		/* user exception exit dispatcher	*/
@@ -198,7 +192,6 @@ char rt_hw_console_getchar(void)
 void rt_hw_interrupt_enable(rt_base_t level)
 {
     portEXIT_CRITICAL_NESTED(level);
-    // XTOS_RESTORE_JUST_INTLEVEL(level);
 }
 
 
@@ -208,32 +201,3 @@ rt_base_t rt_hw_interrupt_disable(void)
     return portENTER_CRITICAL_NESTED();
 }
 
-struct rt_thread *rt_from_thread;
-
-// 找到上一个线程
-void rt_find_from_thread( void )
-{
-    // rt_thread_self();
-    rt_from_thread = rt_list_entry(rt_interrupt_from_thread,
-                                  struct rt_thread,
-                                  sp);
-    rt_kprintf("find from_thread:[%s][0x%08x] sp:[0x%08x] exit:[0x%08x]\n", rt_from_thread->name, rt_from_thread, rt_interrupt_from_thread, *(rt_uint32_t *)rt_interrupt_from_thread);
-}
-
-//调试函数
-void rt_debug_printf_a2(rt_uint32_t a2)
-{
-    rt_kprintf("A2: 0x%08x\n", a2);
-}
-void rt_debug_printf_a2a3(rt_uint32_t a2, rt_uint32_t a3)
-{
-    rt_kprintf("A2: 0x%08x A3: 0x%08x\n", a2, a3);
-}
-void rt_debug_test1(void)
-{
-    rt_kprintf("test point 1\n");
-}
-void rt_debug_test2(void)
-{
-    rt_kprintf("test point 2\n");
-}

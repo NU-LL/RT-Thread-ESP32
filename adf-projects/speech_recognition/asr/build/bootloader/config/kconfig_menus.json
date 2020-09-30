@@ -2887,10 +2887,7 @@
                                 "help": "The timeout of the watchdog, in miliseconds. Make this higher than the FreeRTOS tick rate.\n", 
                                 "id": "ESP_INT_WDT_TIMEOUT_MS", 
                                 "name": "ESP_INT_WDT_TIMEOUT_MS", 
-                                "range": [
-                                    10, 
-                                    10000
-                                ], 
+                                "range": null, 
                                 "title": "Interrupt watchdog timeout (ms)", 
                                 "type": "int"
                             }, 

@@ -104,6 +104,9 @@ extern "C" {
 /* Definitions specific to the port being used. */
 #include "portable.h"
 
+#include <rthw.h>
+#include <rtthread.h>
+
 /*
  * Check all the required application specific macros have been defined.
  * These macros are application specific and (as downloaded) are defined
@@ -645,7 +648,7 @@ extern "C" {
 #ifndef traceTASK_NOTIFY_GIVE_FROM_ISR
  	#define traceTASK_NOTIFY_GIVE_FROM_ISR()
  #endif
- 
+
 #ifndef traceISR_EXIT_TO_SCHEDULER
 	#define traceISR_EXIT_TO_SCHEDULER()
 #endif

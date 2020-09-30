@@ -34,8 +34,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/esp-idf/mbedtls/mbedtls/library/cmake_install.cmake")
-  include("/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/esp-idf/mbedtls/mbedtls/include/cmake_install.cmake")
+  include("/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/esp-idf/mbedtls/mbedtls/library/cmake_install.cmake")
+  include("/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/esp-idf/mbedtls/mbedtls/include/cmake_install.cmake")
 
 endif()
 

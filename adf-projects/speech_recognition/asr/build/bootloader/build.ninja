@@ -34,7 +34,7 @@ include rules.ninja
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -49,7 +49,7 @@ build app: phony CMakeFiles/app gen_project_binary
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -124,7 +124,7 @@ build CMakeFiles/bootloader.elf.dir/project_elf_src.c.obj: C_COMPILER__bootloade
 build bootloader.elf: C_EXECUTABLE_LINKER__bootloader.2eelf CMakeFiles/bootloader.elf.dir/project_elf_src.c.obj | esp-idf/soc/libsoc.a esp-idf/xtensa/libxtensa.a esp-idf/log/liblog.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/spi_flash/libspi_flash.a esp-idf/efuse/libefuse.a esp-idf/bootloader_support/libbootloader_support.a esp-idf/main/libmain.a esp-idf/bootloader_support/libbootloader_support.a esp-idf/spi_flash/libspi_flash.a esp-idf/efuse/libefuse.a esp-idf/bootloader_support/libbootloader_support.a esp-idf/spi_flash/libspi_flash.a esp-idf/efuse/libefuse.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/log/liblog.a esp-idf/xtensa/libxtensa.a esp-idf/soc/libsoc.a esp-idf/log/liblog.a esp-idf/xtensa/libxtensa.a esp-idf/soc/libsoc.a /home/null/Code/ESP32/esp-idf-4.0.1/components/xtensa/esp32/libhal.a /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/ld/esp32.peripherals.ld /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_rom/esp32/ld/esp32.rom.ld /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_rom/esp32/ld/esp32.rom.newlib-funcs.ld /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_rom/esp32/ld/esp32.rom.libgcc.ld /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/main/esp32.bootloader.ld /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/main/esp32.bootloader.rom.ld || _project_elf_src esp-idf/main/libmain.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/soc/libsoc.a esp-idf/spi_flash/libspi_flash.a
   FLAGS = -mlongcalls -Wno-frame-address
   LINK_FLAGS = -nostdlib
-  LINK_LIBRARIES = esp-idf/soc/libsoc.a esp-idf/xtensa/libxtensa.a esp-idf/log/liblog.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/spi_flash/libspi_flash.a esp-idf/efuse/libefuse.a esp-idf/bootloader_support/libbootloader_support.a esp-idf/main/libmain.a -Wl,--cref -Wl,--Map=/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/bootloader.map -fno-rtti -fno-lto esp-idf/bootloader_support/libbootloader_support.a esp-idf/spi_flash/libspi_flash.a esp-idf/efuse/libefuse.a esp-idf/bootloader_support/libbootloader_support.a esp-idf/spi_flash/libspi_flash.a esp-idf/efuse/libefuse.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/log/liblog.a esp-idf/xtensa/libxtensa.a esp-idf/soc/libsoc.a esp-idf/log/liblog.a esp-idf/xtensa/libxtensa.a esp-idf/soc/libsoc.a -L /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_rom/esp32/ld -T esp32.rom.ld -T esp32.rom.newlib-funcs.ld -T esp32.rom.libgcc.ld -Wl,--gc-sections /home/null/Code/ESP32/esp-idf-4.0.1/components/xtensa/esp32/libhal.a -L /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/ld -T esp32.peripherals.ld -L /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/main -T esp32.bootloader.ld -T esp32.bootloader.rom.ld
+  LINK_LIBRARIES = esp-idf/soc/libsoc.a esp-idf/xtensa/libxtensa.a esp-idf/log/liblog.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/spi_flash/libspi_flash.a esp-idf/efuse/libefuse.a esp-idf/bootloader_support/libbootloader_support.a esp-idf/main/libmain.a -Wl,--cref -Wl,--Map=/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/bootloader.map -fno-rtti -fno-lto esp-idf/bootloader_support/libbootloader_support.a esp-idf/spi_flash/libspi_flash.a esp-idf/efuse/libefuse.a esp-idf/bootloader_support/libbootloader_support.a esp-idf/spi_flash/libspi_flash.a esp-idf/efuse/libefuse.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/log/liblog.a esp-idf/xtensa/libxtensa.a esp-idf/soc/libsoc.a esp-idf/log/liblog.a esp-idf/xtensa/libxtensa.a esp-idf/soc/libsoc.a -L /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_rom/esp32/ld -T esp32.rom.ld -T esp32.rom.newlib-funcs.ld -T esp32.rom.libgcc.ld -Wl,--gc-sections /home/null/Code/ESP32/esp-idf-4.0.1/components/xtensa/esp32/libhal.a -L /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/ld -T esp32.peripherals.ld -L /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/main -T esp32.bootloader.ld -T esp32.bootloader.rom.ld
   OBJECT_DIR = CMakeFiles/bootloader.elf.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -165,7 +165,7 @@ build CMakeFiles/app: phony || _project_elf_src bootloader.elf esp-idf/bootloade
 # Custom command for CMakeFiles/size-files
 
 build CMakeFiles/size-files: CUSTOM_COMMAND bootloader.elf || _project_elf_src bootloader.elf esp-idf/bootloader_support/libbootloader_support.a esp-idf/efuse/libefuse.a esp-idf/log/liblog.a esp-idf/main/libmain.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/soc/libsoc.a esp-idf/spi_flash/libspi_flash.a esp-idf/xtensa/libxtensa.a
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/tools/idf_size.py --files /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/bootloader.map
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/tools/idf_size.py --files /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/bootloader.map
 
 #############################################
 # Custom command for CMakeFiles/erase_flash
@@ -183,7 +183,7 @@ build CMakeFiles/gen_project_binary: phony .bin_timestamp || _project_elf_src bo
 # Custom command for .bin_timestamp
 
 build .bin_timestamp: CUSTOM_COMMAND bootloader.elf || _project_elf_src bootloader.elf esp-idf/bootloader_support/libbootloader_support.a esp-idf/efuse/libefuse.a esp-idf/log/liblog.a esp-idf/main/libmain.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/soc/libsoc.a esp-idf/spi_flash/libspi_flash.a esp-idf/xtensa/libxtensa.a
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/esptool/esptool.py --chip esp32 elf2image --flash_mode dio --flash_freq 80m --flash_size 4MB -o /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/bootloader.bin bootloader.elf && /usr/bin/cmake -E echo "Generated /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/bootloader.bin" && /usr/bin/cmake -E md5sum /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/bootloader.bin > /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/.bin_timestamp
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/esptool/esptool.py --chip esp32 elf2image --flash_mode dio --flash_freq 80m --flash_size 4MB -o /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/bootloader.bin bootloader.elf && /usr/bin/cmake -E echo "Generated /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/bootloader.bin" && /usr/bin/cmake -E md5sum /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/bootloader.bin > /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/.bin_timestamp
   DESC = Generating binary image from built executable
   restat = 1
 
@@ -191,21 +191,21 @@ build .bin_timestamp: CUSTOM_COMMAND bootloader.elf || _project_elf_src bootload
 # Custom command for CMakeFiles/confserver
 
 build CMakeFiles/confserver: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/confserver.py --env-file /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/config.env --kconfig /home/null/Code/ESP32/esp-idf-4.0.1/Kconfig --sdkconfig-rename /home/null/Code/ESP32/esp-idf-4.0.1/sdkconfig.rename --config /home/null/Code/ESP32/adf-examples/speech_recognition/asr/sdkconfig
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/confserver.py --env-file /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/config.env --kconfig /home/null/Code/ESP32/esp-idf-4.0.1/Kconfig --sdkconfig-rename /home/null/Code/ESP32/esp-idf-4.0.1/sdkconfig.rename --config /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/sdkconfig
   pool = console
 
 #############################################
 # Custom command for CMakeFiles/menuconfig
 
 build CMakeFiles/menuconfig: CUSTOM_COMMAND || mconf-idf
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/confgen.py --kconfig /home/null/Code/ESP32/esp-idf-4.0.1/Kconfig --sdkconfig-rename /home/null/Code/ESP32/esp-idf-4.0.1/sdkconfig.rename --config /home/null/Code/ESP32/adf-examples/speech_recognition/asr/sdkconfig --env-file /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/config.env --env IDF_TARGET=esp32 --dont-write-deprecated --output config /home/null/Code/ESP32/adf-examples/speech_recognition/asr/sdkconfig && /usr/bin/cmake -E env COMPONENT_KCONFIGS=/home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/Kconfig\ /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/Kconfig\ /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_common/Kconfig\ /home/null/Code/ESP32/esp-idf-4.0.1/components/log/Kconfig\ /home/null/Code/ESP32/esp-idf-4.0.1/components/spi_flash/Kconfig COMPONENT_KCONFIGS_PROJBUILD=/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/Kconfig.projbuild\ /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/Kconfig.projbuild\ /home/null/Code/ESP32/esp-idf-4.0.1/components/partition_table/Kconfig.projbuild IDF_CMAKE=y KCONFIG_CONFIG=/home/null/Code/ESP32/adf-examples/speech_recognition/asr/sdkconfig IDF_TARGET=esp32 /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/kconfig_bin/mconf-idf /home/null/Code/ESP32/esp-idf-4.0.1/Kconfig && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/confgen.py --kconfig /home/null/Code/ESP32/esp-idf-4.0.1/Kconfig --sdkconfig-rename /home/null/Code/ESP32/esp-idf-4.0.1/sdkconfig.rename --config /home/null/Code/ESP32/adf-examples/speech_recognition/asr/sdkconfig --env-file /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/config.env --env IDF_TARGET=esp32 --output config /home/null/Code/ESP32/adf-examples/speech_recognition/asr/sdkconfig
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/confgen.py --kconfig /home/null/Code/ESP32/esp-idf-4.0.1/Kconfig --sdkconfig-rename /home/null/Code/ESP32/esp-idf-4.0.1/sdkconfig.rename --config /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/sdkconfig --env-file /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/config.env --env IDF_TARGET=esp32 --dont-write-deprecated --output config /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/sdkconfig && /usr/bin/cmake -E env COMPONENT_KCONFIGS=/home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/Kconfig\ /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/Kconfig\ /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_common/Kconfig\ /home/null/Code/ESP32/esp-idf-4.0.1/components/log/Kconfig\ /home/null/Code/ESP32/esp-idf-4.0.1/components/spi_flash/Kconfig COMPONENT_KCONFIGS_PROJBUILD=/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/Kconfig.projbuild\ /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/Kconfig.projbuild\ /home/null/Code/ESP32/esp-idf-4.0.1/components/partition_table/Kconfig.projbuild IDF_CMAKE=y KCONFIG_CONFIG=/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/sdkconfig IDF_TARGET=esp32 /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/kconfig_bin/mconf-idf /home/null/Code/ESP32/esp-idf-4.0.1/Kconfig && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/confgen.py --kconfig /home/null/Code/ESP32/esp-idf-4.0.1/Kconfig --sdkconfig-rename /home/null/Code/ESP32/esp-idf-4.0.1/sdkconfig.rename --config /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/sdkconfig --env-file /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/config.env --env IDF_TARGET=esp32 --output config /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/sdkconfig
   pool = console
 
 #############################################
 # Custom command for CMakeFiles/app-flash
 
 build CMakeFiles/app-flash: CUSTOM_COMMAND || _project_elf_src app bootloader.elf esp-idf/bootloader_support/libbootloader_support.a esp-idf/efuse/libefuse.a esp-idf/log/liblog.a esp-idf/main/libmain.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/soc/libsoc.a esp-idf/spi_flash/libspi_flash.a esp-idf/xtensa/libxtensa.a gen_project_binary
-  COMMAND = cd /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py && /usr/bin/cmake -D IDF_PATH="/home/null/Code/ESP32/esp-idf-4.0.1" -D ESPTOOLPY="/home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/esptool/esptool.py --chip esp32" -D ESPTOOL_ARGS="write_flash @flash_app_args" -D WORKING_DIRECTORY="/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader" -P /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/run_esptool.cmake
+  COMMAND = cd /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py && /usr/bin/cmake -D IDF_PATH="/home/null/Code/ESP32/esp-idf-4.0.1" -D ESPTOOLPY="/home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/esptool/esptool.py --chip esp32" -D ESPTOOL_ARGS="write_flash @flash_app_args" -D WORKING_DIRECTORY="/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader" -P /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/run_esptool.cmake
   pool = console
 
 #############################################
@@ -217,7 +217,7 @@ build CMakeFiles/mconf-idf: phony CMakeFiles/mconf-idf-complete
 # Custom command for CMakeFiles/mconf-idf-complete
 
 build CMakeFiles/mconf-idf-complete mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-done: CUSTOM_COMMAND mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/CMakeFiles && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/CMakeFiles/mconf-idf-complete && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-done
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/CMakeFiles && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/CMakeFiles/mconf-idf-complete && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-done
   DESC = Completed 'mconf-idf'
   restat = 1
 
@@ -225,7 +225,7 @@ build CMakeFiles/mconf-idf-complete mconf-idf-prefix/src/mconf-idf-stamp/mconf-i
 # Custom command for mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install
 
 build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install: CUSTOM_COMMAND mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/kconfig_bin && /usr/bin/cmake -E echo_append && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/kconfig_bin && /usr/bin/cmake -E echo_append && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install
   DESC = No install step for 'mconf-idf'
   restat = 1
 
@@ -233,7 +233,7 @@ build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install: CUSTOM_COMMAND mco
 # Custom command for mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir
 
 build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/kconfig_bin && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/tmp && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/kconfig_bin && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/tmp && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp && /usr/bin/cmake -E make_directory /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir
   DESC = Creating directories for 'mconf-idf'
   restat = 1
 
@@ -241,7 +241,7 @@ build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir: CUSTOM_COMMAND
 # Custom command for mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download
 
 build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download: CUSTOM_COMMAND mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /usr/bin/cmake -E echo_append && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /usr/bin/cmake -E echo_append && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download
   DESC = No download step for 'mconf-idf'
   restat = 1
 
@@ -249,7 +249,7 @@ build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download: CUSTOM_COMMAND mc
 # Custom command for mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update
 
 build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update: CUSTOM_COMMAND mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /usr/bin/cmake -E echo_append && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /usr/bin/cmake -E echo_append && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update
   DESC = No update step for 'mconf-idf'
   restat = 1
 
@@ -257,7 +257,7 @@ build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update: CUSTOM_COMMAND mcon
 # Custom command for mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch
 
 build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch: CUSTOM_COMMAND mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /usr/bin/cmake -E echo_append && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /usr/bin/cmake -E echo_append && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch
   DESC = No patch step for 'mconf-idf'
   restat = 1
 
@@ -265,7 +265,7 @@ build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch: CUSTOM_COMMAND mconf
 # Custom command for mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure
 
 build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure: CUSTOM_COMMAND mconf-idf-prefix/tmp/mconf-idf-cfgcmd.txt mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/kconfig_bin && /usr/bin/cmake -E echo_append && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/kconfig_bin && /usr/bin/cmake -E echo_append && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure
   DESC = No configure step for 'mconf-idf'
   restat = 1
 
@@ -273,7 +273,7 @@ build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure: CUSTOM_COMMAND m
 # Custom command for mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build
 
 build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build kconfig_bin/mconf-idf: CUSTOM_COMMAND mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/conf.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/confdata.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/expand_env.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/expr.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/gconf.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/images.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/kxgettext.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/mconf.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/menu.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/nconf.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/nconf.gui.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/symbol.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/util.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/Makefile /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/idf.cmake
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/kconfig_bin && rm -f /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/zconf.lex.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/zconf.hash.c && make -f /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/Makefile mconf-idf && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/kconfig_bin && rm -f /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/zconf.lex.c /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/zconf.hash.c && make -f /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig/Makefile mconf-idf && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build
   DESC = Performing build step for 'mconf-idf'
   restat = 1
 
@@ -281,21 +281,21 @@ build mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build kconfig_bin/mconf-idf
 # Custom command for CMakeFiles/monitor
 
 build CMakeFiles/monitor: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py && /usr/bin/cmake -D IDF_PATH="/home/null/Code/ESP32/esp-idf-4.0.1" -D IDF_MONITOR="/home/null/Code/ESP32/esp-idf-4.0.1/tools/idf_monitor.py" -D ELF_FILE="bootloader.elf" -D WORKING_DIRECTORY="/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader" -P run_idf_monitor.cmake
+  COMMAND = cd /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py && /usr/bin/cmake -D IDF_PATH="/home/null/Code/ESP32/esp-idf-4.0.1" -D IDF_MONITOR="/home/null/Code/ESP32/esp-idf-4.0.1/tools/idf_monitor.py" -D ELF_FILE="bootloader.elf" -D WORKING_DIRECTORY="/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader" -P run_idf_monitor.cmake
   pool = console
 
 #############################################
 # Custom command for CMakeFiles/flash
 
 build CMakeFiles/flash: CUSTOM_COMMAND /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/partition_table /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/bootloader || _project_elf_src app bootloader.elf esp-idf/bootloader_support/libbootloader_support.a esp-idf/efuse/libefuse.a esp-idf/log/liblog.a esp-idf/main/libmain.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/soc/libsoc.a esp-idf/spi_flash/libspi_flash.a esp-idf/xtensa/libxtensa.a gen_project_binary
-  COMMAND = cd /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py && /usr/bin/cmake -D IDF_PATH="/home/null/Code/ESP32/esp-idf-4.0.1" -D ESPTOOLPY="/home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/esptool/esptool.py --chip esp32" -D ESPTOOL_ARGS="write_flash @flash_project_args" -D WORKING_DIRECTORY="/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader" -P /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/run_esptool.cmake
+  COMMAND = cd /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py && /usr/bin/cmake -D IDF_PATH="/home/null/Code/ESP32/esp-idf-4.0.1" -D ESPTOOLPY="/home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/esptool/esptool.py --chip esp32" -D ESPTOOL_ARGS="write_flash @flash_project_args" -D WORKING_DIRECTORY="/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader" -P /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/run_esptool.cmake
   pool = console
 
 #############################################
 # Custom command for project_elf_src.c
 
 build project_elf_src.c: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/project_elf_src.c
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /usr/bin/cmake -E touch /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/project_elf_src.c
   DESC = Generating project_elf_src.c
   restat = 1
 
@@ -303,13 +303,13 @@ build project_elf_src.c: CUSTOM_COMMAND
 # Custom command for CMakeFiles/encrypted-flash
 
 build CMakeFiles/encrypted-flash: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /usr/bin/cmake -E echo "Error: The target encrypted-flash requires" && /usr/bin/cmake -E echo "CONFIG_SECURE_FLASH_ENCRYPTION_MODE_DEVELOPMENT to be enabled." && /usr/bin/cmake -E env "FAIL_MESSAGE=Failed executing target (see errors on lines above)" /usr/bin/cmake -P /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/scripts/fail.cmake
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /usr/bin/cmake -E echo "Error: The target encrypted-flash requires" && /usr/bin/cmake -E echo "CONFIG_SECURE_FLASH_ENCRYPTION_MODE_DEVELOPMENT to be enabled." && /usr/bin/cmake -E env "FAIL_MESSAGE=Failed executing target (see errors on lines above)" /usr/bin/cmake -P /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/scripts/fail.cmake
 
 #############################################
 # Custom command for CMakeFiles/encrypted-app-flash
 
 build CMakeFiles/encrypted-app-flash: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /usr/bin/cmake -E echo "Error: The target encrypted-app-flash requires" && /usr/bin/cmake -E echo "CONFIG_SECURE_FLASH_ENCRYPTION_MODE_DEVELOPMENT to be enabled." && /usr/bin/cmake -E env "FAIL_MESSAGE=Failed executing target (see errors on lines above)" /usr/bin/cmake -P /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/scripts/fail.cmake
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /usr/bin/cmake -E echo "Error: The target encrypted-app-flash requires" && /usr/bin/cmake -E echo "CONFIG_SECURE_FLASH_ENCRYPTION_MODE_DEVELOPMENT to be enabled." && /usr/bin/cmake -E env "FAIL_MESSAGE=Failed executing target (see errors on lines above)" /usr/bin/cmake -P /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/scripts/fail.cmake
 
 #############################################
 # Phony custom command for CMakeFiles/_project_elf_src
@@ -320,13 +320,13 @@ build CMakeFiles/_project_elf_src: phony project_elf_src.c
 # Custom command for CMakeFiles/size
 
 build CMakeFiles/size: CUSTOM_COMMAND bootloader.elf || _project_elf_src bootloader.elf esp-idf/bootloader_support/libbootloader_support.a esp-idf/efuse/libefuse.a esp-idf/log/liblog.a esp-idf/main/libmain.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/soc/libsoc.a esp-idf/spi_flash/libspi_flash.a esp-idf/xtensa/libxtensa.a
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/tools/idf_size.py /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/bootloader.map
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/tools/idf_size.py /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/bootloader.map
 
 #############################################
 # Custom command for CMakeFiles/size-components
 
 build CMakeFiles/size-components: CUSTOM_COMMAND bootloader.elf || _project_elf_src bootloader.elf esp-idf/bootloader_support/libbootloader_support.a esp-idf/efuse/libefuse.a esp-idf/log/liblog.a esp-idf/main/libmain.a esp-idf/micro-ecc/libmicro-ecc.a esp-idf/soc/libsoc.a esp-idf/spi_flash/libspi_flash.a esp-idf/xtensa/libxtensa.a
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/tools/idf_size.py --archives /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/bootloader.map
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/tools/idf_size.py --archives /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/bootloader.map
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
 # /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/CMakeLists.txt
@@ -337,7 +337,7 @@ build CMakeFiles/size-components: CUSTOM_COMMAND bootloader.elf || _project_elf_
 # Utility command for rebuild_cache
 
 build esp-idf/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -347,7 +347,7 @@ build esp-idf/rebuild_cache: phony esp-idf/CMakeFiles/rebuild_cache.util
 # Utility command for edit_cache
 
 build esp-idf/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -362,7 +362,7 @@ build esp-idf/edit_cache: phony esp-idf/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build esp-idf/esp32/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/esp32 && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/esp32 && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -372,7 +372,7 @@ build esp-idf/esp32/rebuild_cache: phony esp-idf/esp32/CMakeFiles/rebuild_cache.
 # Utility command for edit_cache
 
 build esp-idf/esp32/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/esp32 && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/esp32 && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -387,7 +387,7 @@ build esp-idf/esp32/edit_cache: phony esp-idf/esp32/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build esp-idf/soc/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/soc && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/soc && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -558,7 +558,7 @@ build esp-idf/soc/libsoc.a: C_STATIC_LIBRARY_LINKER____idf_soc esp-idf/soc/CMake
 # Utility command for edit_cache
 
 build esp-idf/soc/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/soc && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/soc && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -573,7 +573,7 @@ build esp-idf/soc/edit_cache: phony esp-idf/soc/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build esp-idf/xtensa/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/xtensa && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/xtensa && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -630,7 +630,7 @@ build esp-idf/xtensa/libxtensa.a: C_STATIC_LIBRARY_LINKER____idf_xtensa esp-idf/
 # Utility command for edit_cache
 
 build esp-idf/xtensa/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/xtensa && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/xtensa && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -645,7 +645,7 @@ build esp-idf/xtensa/edit_cache: phony esp-idf/xtensa/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build esp-idf/esp_common/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/esp_common && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/esp_common && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -655,7 +655,7 @@ build esp-idf/esp_common/rebuild_cache: phony esp-idf/esp_common/CMakeFiles/rebu
 # Utility command for edit_cache
 
 build esp-idf/esp_common/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/esp_common && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/esp_common && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -670,7 +670,7 @@ build esp-idf/esp_common/edit_cache: phony esp-idf/esp_common/CMakeFiles/edit_ca
 # Utility command for rebuild_cache
 
 build esp-idf/esp_rom/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/esp_rom && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/esp_rom && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -680,7 +680,7 @@ build esp-idf/esp_rom/rebuild_cache: phony esp-idf/esp_rom/CMakeFiles/rebuild_ca
 # Utility command for edit_cache
 
 build esp-idf/esp_rom/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/esp_rom && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/esp_rom && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -695,7 +695,7 @@ build esp-idf/esp_rom/edit_cache: phony esp-idf/esp_rom/CMakeFiles/edit_cache.ut
 # Utility command for rebuild_cache
 
 build esp-idf/log/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/log && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/log && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -734,7 +734,7 @@ build esp-idf/log/liblog.a: C_STATIC_LIBRARY_LINKER____idf_log esp-idf/log/CMake
 # Utility command for edit_cache
 
 build esp-idf/log/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/log && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/log && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -749,7 +749,7 @@ build esp-idf/log/edit_cache: phony esp-idf/log/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build esp-idf/partition_table/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/partition_table && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/partition_table && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -759,7 +759,7 @@ build esp-idf/partition_table/rebuild_cache: phony esp-idf/partition_table/CMake
 # Utility command for edit_cache
 
 build esp-idf/partition_table/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/partition_table && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/partition_table && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -774,7 +774,7 @@ build esp-idf/partition_table/edit_cache: phony esp-idf/partition_table/CMakeFil
 # Utility command for rebuild_cache
 
 build esp-idf/bootloader/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/bootloader && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/bootloader && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -784,7 +784,7 @@ build esp-idf/bootloader/rebuild_cache: phony esp-idf/bootloader/CMakeFiles/rebu
 # Utility command for edit_cache
 
 build esp-idf/bootloader/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/bootloader && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/bootloader && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -799,7 +799,7 @@ build esp-idf/bootloader/edit_cache: phony esp-idf/bootloader/CMakeFiles/edit_ca
 # Utility command for rebuild_cache
 
 build esp-idf/micro-ecc/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/micro-ecc && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/micro-ecc && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -838,7 +838,7 @@ build esp-idf/micro-ecc/libmicro-ecc.a: C_STATIC_LIBRARY_LINKER____idf_micro-ecc
 # Utility command for edit_cache
 
 build esp-idf/micro-ecc/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/micro-ecc && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/micro-ecc && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -853,7 +853,7 @@ build esp-idf/micro-ecc/edit_cache: phony esp-idf/micro-ecc/CMakeFiles/edit_cach
 # Utility command for rebuild_cache
 
 build esp-idf/spi_flash/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/spi_flash && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/spi_flash && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -892,7 +892,7 @@ build esp-idf/spi_flash/libspi_flash.a: C_STATIC_LIBRARY_LINKER____idf_spi_flash
 # Utility command for edit_cache
 
 build esp-idf/spi_flash/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/spi_flash && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/spi_flash && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -964,7 +964,7 @@ build esp-idf/efuse/efuse_custom_table: phony
 # Utility command for rebuild_cache
 
 build esp-idf/efuse/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/efuse && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/efuse && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -984,7 +984,7 @@ build esp-idf/efuse/efuse_test_table: phony esp-idf/efuse/CMakeFiles/efuse_test_
 # Utility command for edit_cache
 
 build esp-idf/efuse/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/efuse && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/efuse && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -994,19 +994,19 @@ build esp-idf/efuse/edit_cache: phony esp-idf/efuse/CMakeFiles/edit_cache.util
 # Custom command for esp-idf/efuse/CMakeFiles/efuse_common_table
 
 build esp-idf/efuse/CMakeFiles/efuse_common_table: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/efuse && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/efuse_table_gen.py /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/esp32/esp_efuse_table.csv --max_blk_len 192
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/efuse && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/efuse_table_gen.py /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/esp32/esp_efuse_table.csv --max_blk_len 192
 
 #############################################
 # Custom command for esp-idf/efuse/CMakeFiles/show_efuse_table
 
 build esp-idf/efuse/CMakeFiles/show_efuse_table: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/efuse && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/efuse_table_gen.py /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/esp32/esp_efuse_table.csv --max_blk_len 192 --info
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/efuse && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/efuse_table_gen.py /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/esp32/esp_efuse_table.csv --max_blk_len 192 --info
 
 #############################################
 # Custom command for esp-idf/efuse/CMakeFiles/efuse_test_table
 
 build esp-idf/efuse/CMakeFiles/efuse_test_table: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/efuse && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/efuse_table_gen.py /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/test/esp_efuse_test_table.csv --max_blk_len 192
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/efuse && /home/null/.espressif/python_env/idf4.0_py2.7_env/bin/python /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/efuse_table_gen.py /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/test/esp_efuse_test_table.csv --max_blk_len 192
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
 # /home/null/Code/ESP32/esp-idf-4.0.1/CMakeLists.txt
@@ -1017,7 +1017,7 @@ build esp-idf/efuse/CMakeFiles/efuse_test_table: CUSTOM_COMMAND
 # Utility command for rebuild_cache
 
 build esp-idf/bootloader_support/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/bootloader_support && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/bootloader_support && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -1140,7 +1140,7 @@ build esp-idf/bootloader_support/libbootloader_support.a: C_STATIC_LIBRARY_LINKE
 # Utility command for edit_cache
 
 build esp-idf/bootloader_support/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/bootloader_support && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/bootloader_support && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -1155,7 +1155,7 @@ build esp-idf/bootloader_support/edit_cache: phony esp-idf/bootloader_support/CM
 # Utility command for rebuild_cache
 
 build esp-idf/esptool_py/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/esptool_py && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/esptool_py && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -1165,7 +1165,7 @@ build esp-idf/esptool_py/rebuild_cache: phony esp-idf/esptool_py/CMakeFiles/rebu
 # Utility command for edit_cache
 
 build esp-idf/esptool_py/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/esptool_py && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/esptool_py && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -1180,7 +1180,7 @@ build esp-idf/esptool_py/edit_cache: phony esp-idf/esptool_py/CMakeFiles/edit_ca
 # Utility command for rebuild_cache
 
 build esp-idf/main/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/main && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/main && /usr/bin/cmake -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -1219,7 +1219,7 @@ build esp-idf/main/libmain.a: C_STATIC_LIBRARY_LINKER____idf_main esp-idf/main/C
 # Utility command for edit_cache
 
 build esp-idf/main/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/main && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader
+  COMMAND = cd /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/main && /usr/bin/cmake-gui -H/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -1254,91 +1254,91 @@ build show_efuse_table: phony esp-idf/efuse/show_efuse_table
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf
 
 build  esp-idf/all: phony esp-idf/esp32/all esp-idf/soc/all esp-idf/xtensa/all esp-idf/esp_common/all esp-idf/esp_rom/all esp-idf/log/all esp-idf/partition_table/all esp-idf/bootloader/all esp-idf/micro-ecc/all esp-idf/spi_flash/all esp-idf/efuse/all esp-idf/bootloader_support/all esp-idf/esptool_py/all esp-idf/main/all
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/bootloader
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/bootloader
 
 build  esp-idf/bootloader/all: phony
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/bootloader_support
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/bootloader_support
 
 build  esp-idf/bootloader_support/all: phony __idf_bootloader_support
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/efuse
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/efuse
 
 build  esp-idf/efuse/all: phony __idf_efuse
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/esp32
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/esp32
 
 build  esp-idf/esp32/all: phony
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/esp_common
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/esp_common
 
 build  esp-idf/esp_common/all: phony
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/esp_rom
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/esp_rom
 
 build  esp-idf/esp_rom/all: phony
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/esptool_py
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/esptool_py
 
 build  esp-idf/esptool_py/all: phony
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/log
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/log
 
 build  esp-idf/log/all: phony __idf_log
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/main
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/main
 
 build  esp-idf/main/all: phony __idf_main
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/micro-ecc
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/micro-ecc
 
 build  esp-idf/micro-ecc/all: phony __idf_micro-ecc
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/partition_table
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/partition_table
 
 build  esp-idf/partition_table/all: phony
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/soc
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/soc
 
 build  esp-idf/soc/all: phony __idf_soc
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/spi_flash
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/spi_flash
 
 build  esp-idf/spi_flash/all: phony __idf_spi_flash
 # =============================================================================
 
 #############################################
-# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/esp-idf/xtensa
+# Folder: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/esp-idf/xtensa
 
 build  esp-idf/xtensa/all: phony __idf_xtensa
 # =============================================================================
@@ -1358,13 +1358,13 @@ default all
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/null/Code/ESP32/adf-examples/speech_recognition/asr/sdkconfig /home/null/Code/ESP32/esp-idf-4.0.1/.git/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/asio/asio/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/bootloader/subproject/components/micro-ecc/micro-ecc/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/bt/controller/lib/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/bt/host/nimble/nimble/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/coap/libcoap/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/esp_wifi/lib_esp32/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/esptool_py/esptool/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/expat/expat/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/json/cJSON/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/libsodium/libsodium/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/lwip/lwip/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/mbedtls/mbedtls/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/mqtt/esp-mqtt/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/nghttp/nghttp2/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/protobuf-c/protobuf-c/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/spiffs/spiffs/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/unity/unity/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/examples/build_system/cmake/import_lib/main/lib/tinyxml2/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/asio/asio/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/components/micro-ecc/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/components/micro-ecc/micro-ecc/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/main/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader_support/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bt/controller/lib/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/bt/host/nimble/nimble/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/coap/libcoap/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/esp32/sources.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_common/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_rom/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_wifi/lib_esp32/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/esptool/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/expat/expat/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/json/cJSON/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/libsodium/libsodium/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/log/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/lwip/lwip/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/mbedtls/mbedtls/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/mqtt/esp-mqtt/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/nghttp/nghttp2/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/partition_table/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/partition_table/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/protobuf-c/protobuf-c/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/soc/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/soc/esp32/sources.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/spi_flash/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/spiffs/spiffs/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/unity/unity/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/xtensa/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/examples/build_system/cmake/import_lib/main/lib/tinyxml2/.git /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/build.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/component.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/crosstool_version_check.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/git_submodules.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/idf.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/kconfig.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/ldgen.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/project.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/project_description.json.in /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/targets.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/third_party/GetGitRevisionDescription.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/third_party/GetGitRevisionDescription.cmake.in /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/toolchain-esp32.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/utilities.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/version.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/confgen.py /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/config.env.in /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/kconfiglib.py /usr/share/cmake-3.10/Modules/CMakeASMInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-ASM.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/ExternalProject.cmake /usr/share/cmake-3.10/Modules/FindGit.cmake /usr/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake-3.10/Modules/FindPackageMessage.cmake /usr/share/cmake-3.10/Modules/Platform/Generic.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeASMCompiler.cmake CMakeFiles/3.10.2/CMakeCCompiler.cmake CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake CMakeFiles/git-data/grabRef.cmake config/sdkconfig.cmake config/sdkconfig.h mconf-idf-prefix/tmp/mconf-idf-cfgcmd.txt.in
+build build.ninja: RERUN_CMAKE | /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/sdkconfig /home/null/Code/ESP32/esp-idf-4.0.1/.git/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/asio/asio/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/bootloader/subproject/components/micro-ecc/micro-ecc/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/bt/controller/lib/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/bt/host/nimble/nimble/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/coap/libcoap/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/esp_wifi/lib_esp32/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/esptool_py/esptool/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/expat/expat/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/json/cJSON/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/libsodium/libsodium/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/lwip/lwip/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/mbedtls/mbedtls/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/mqtt/esp-mqtt/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/nghttp/nghttp2/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/protobuf-c/protobuf-c/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/spiffs/spiffs/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/unity/unity/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/examples/build_system/cmake/import_lib/main/lib/tinyxml2/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/asio/asio/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/components/micro-ecc/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/components/micro-ecc/micro-ecc/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/main/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader_support/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bt/controller/lib/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/bt/host/nimble/nimble/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/coap/libcoap/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/esp32/sources.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_common/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_rom/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_wifi/lib_esp32/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/esptool/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/expat/expat/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/json/cJSON/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/libsodium/libsodium/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/log/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/lwip/lwip/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/mbedtls/mbedtls/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/mqtt/esp-mqtt/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/nghttp/nghttp2/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/partition_table/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/partition_table/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/protobuf-c/protobuf-c/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/soc/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/soc/esp32/sources.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/spi_flash/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/spiffs/spiffs/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/unity/unity/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/xtensa/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/examples/build_system/cmake/import_lib/main/lib/tinyxml2/.git /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/build.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/component.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/crosstool_version_check.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/git_submodules.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/idf.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/kconfig.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/ldgen.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/project.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/project_description.json.in /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/targets.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/third_party/GetGitRevisionDescription.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/third_party/GetGitRevisionDescription.cmake.in /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/toolchain-esp32.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/utilities.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/version.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/confgen.py /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/config.env.in /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/kconfiglib.py /usr/share/cmake-3.10/Modules/CMakeASMInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-ASM.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/ExternalProject.cmake /usr/share/cmake-3.10/Modules/FindGit.cmake /usr/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake-3.10/Modules/FindPackageMessage.cmake /usr/share/cmake-3.10/Modules/Platform/Generic.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeASMCompiler.cmake CMakeFiles/3.10.2/CMakeCCompiler.cmake CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake CMakeFiles/git-data/grabRef.cmake config/sdkconfig.cmake config/sdkconfig.h mconf-idf-prefix/tmp/mconf-idf-cfgcmd.txt.in
   pool = console
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/null/Code/ESP32/adf-examples/speech_recognition/asr/sdkconfig /home/null/Code/ESP32/esp-idf-4.0.1/.git/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/asio/asio/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/bootloader/subproject/components/micro-ecc/micro-ecc/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/bt/controller/lib/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/bt/host/nimble/nimble/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/coap/libcoap/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/esp_wifi/lib_esp32/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/esptool_py/esptool/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/expat/expat/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/json/cJSON/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/libsodium/libsodium/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/lwip/lwip/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/mbedtls/mbedtls/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/mqtt/esp-mqtt/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/nghttp/nghttp2/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/protobuf-c/protobuf-c/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/spiffs/spiffs/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/unity/unity/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/examples/build_system/cmake/import_lib/main/lib/tinyxml2/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/asio/asio/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/components/micro-ecc/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/components/micro-ecc/micro-ecc/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/main/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader_support/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bt/controller/lib/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/bt/host/nimble/nimble/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/coap/libcoap/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/esp32/sources.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_common/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_rom/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_wifi/lib_esp32/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/esptool/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/expat/expat/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/json/cJSON/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/libsodium/libsodium/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/log/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/lwip/lwip/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/mbedtls/mbedtls/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/mqtt/esp-mqtt/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/nghttp/nghttp2/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/partition_table/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/partition_table/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/protobuf-c/protobuf-c/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/soc/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/soc/esp32/sources.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/spi_flash/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/spiffs/spiffs/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/unity/unity/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/xtensa/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/examples/build_system/cmake/import_lib/main/lib/tinyxml2/.git /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/build.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/component.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/crosstool_version_check.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/git_submodules.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/idf.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/kconfig.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/ldgen.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/project.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/project_description.json.in /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/targets.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/third_party/GetGitRevisionDescription.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/third_party/GetGitRevisionDescription.cmake.in /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/toolchain-esp32.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/utilities.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/version.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/confgen.py /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/config.env.in /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/kconfiglib.py /usr/share/cmake-3.10/Modules/CMakeASMInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-ASM.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/ExternalProject.cmake /usr/share/cmake-3.10/Modules/FindGit.cmake /usr/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake-3.10/Modules/FindPackageMessage.cmake /usr/share/cmake-3.10/Modules/Platform/Generic.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeASMCompiler.cmake CMakeFiles/3.10.2/CMakeCCompiler.cmake CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake CMakeFiles/git-data/grabRef.cmake config/sdkconfig.cmake config/sdkconfig.h mconf-idf-prefix/tmp/mconf-idf-cfgcmd.txt.in: phony
+build /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/sdkconfig /home/null/Code/ESP32/esp-idf-4.0.1/.git/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/asio/asio/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/bootloader/subproject/components/micro-ecc/micro-ecc/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/bt/controller/lib/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/bt/host/nimble/nimble/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/coap/libcoap/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/esp_wifi/lib_esp32/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/esptool_py/esptool/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/expat/expat/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/json/cJSON/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/libsodium/libsodium/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/lwip/lwip/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/mbedtls/mbedtls/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/mqtt/esp-mqtt/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/nghttp/nghttp2/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/protobuf-c/protobuf-c/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/spiffs/spiffs/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/components/unity/unity/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/.git/modules/examples/build_system/cmake/import_lib/main/lib/tinyxml2/HEAD /home/null/Code/ESP32/esp-idf-4.0.1/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/asio/asio/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/components/micro-ecc/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/components/micro-ecc/micro-ecc/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject/main/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader_support/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/bt/controller/lib/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/bt/host/nimble/nimble/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/coap/libcoap/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/efuse/esp32/sources.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_common/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_rom/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esp_wifi/lib_esp32/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/esptool/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/esptool_py/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/expat/expat/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/json/cJSON/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/libsodium/libsodium/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/log/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/lwip/lwip/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/mbedtls/mbedtls/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/mqtt/esp-mqtt/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/nghttp/nghttp2/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/partition_table/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/partition_table/project_include.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/protobuf-c/protobuf-c/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/soc/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/soc/esp32/sources.cmake /home/null/Code/ESP32/esp-idf-4.0.1/components/spi_flash/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/components/spiffs/spiffs/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/unity/unity/.git /home/null/Code/ESP32/esp-idf-4.0.1/components/xtensa/CMakeLists.txt /home/null/Code/ESP32/esp-idf-4.0.1/examples/build_system/cmake/import_lib/main/lib/tinyxml2/.git /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/build.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/component.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/crosstool_version_check.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/git_submodules.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/idf.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/kconfig.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/ldgen.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/project.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/project_description.json.in /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/targets.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/third_party/GetGitRevisionDescription.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/third_party/GetGitRevisionDescription.cmake.in /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/toolchain-esp32.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/utilities.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/cmake/version.cmake /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/confgen.py /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/config.env.in /home/null/Code/ESP32/esp-idf-4.0.1/tools/kconfig_new/kconfiglib.py /usr/share/cmake-3.10/Modules/CMakeASMInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-ASM.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/ExternalProject.cmake /usr/share/cmake-3.10/Modules/FindGit.cmake /usr/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake-3.10/Modules/FindPackageMessage.cmake /usr/share/cmake-3.10/Modules/Platform/Generic.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeASMCompiler.cmake CMakeFiles/3.10.2/CMakeCCompiler.cmake CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake CMakeFiles/git-data/grabRef.cmake config/sdkconfig.cmake config/sdkconfig.h mconf-idf-prefix/tmp/mconf-idf-cfgcmd.txt.in: phony
 
 #############################################
 # Clean all the built files.

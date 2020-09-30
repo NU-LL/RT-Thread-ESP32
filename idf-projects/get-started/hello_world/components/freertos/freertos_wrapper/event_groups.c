@@ -63,7 +63,7 @@
 	{
         static rt_uint16_t idx = 0;
         char namebuf[16] = {0};
-        sprintf( namebuf, "event_%02d", idx);
+        sprintf( namebuf, "event%02d", idx);
         idx++;
         return rt_event_create(namebuf, RT_IPC_FLAG_FIFO);
 	}
@@ -200,9 +200,13 @@ EventBits_t xEventGroupWaitBits( EventGroupHandle_t xEventGroup, const EventBits
 {
     rt_uint32_t bits = 0;
     rt_event_t event = (rt_event_t)xEventGroup;
+
+    /* parameter check */
+    RT_ASSERT(event != RT_NULL);
+    RT_ASSERT(rt_object_get_type(&event->parent.parent) == RT_Object_Class_Event);
     rt_uint8_t option = ((xWaitForAllBits == pdTRUE)?RT_EVENT_FLAG_AND:RT_EVENT_FLAG_OR)|((xClearOnExit == pdTRUE)?RT_EVENT_FLAG_CLEAR:0x00);
 
-    rt_event_recv(event, uxBitsToWaitFor, option, xTicksToWait, &bits);
+    rt_event_recv(event, uxBitsToWaitFor, option, ((xTicksToWait==portMAX_DELAY)?RT_WAITING_FOREVER:xTicksToWait), &bits);
     return bits;
 }
 
@@ -255,18 +259,65 @@ EventBits_t xEventGroupWaitBits( EventGroupHandle_t xEventGroup, const EventBits
  * @endcode
  * \ingroup EventGroup
  */
+// ipc内部函数 由于是static 故这里重新实现一遍
+rt_inline rt_err_t rt_ipc_list_resume_all(rt_list_t *list)
+{
+    struct rt_thread *thread;
+    register rt_ubase_t temp;
+
+    /* wakeup all suspend threads */
+    while (!rt_list_isempty(list))
+    {
+        /* disable interrupt */
+        temp = rt_hw_interrupt_disable();
+
+        /* get next suspend thread */
+        thread = rt_list_entry(list->next, struct rt_thread, tlist);
+        /* set error code to RT_ERROR */
+        thread->error = -RT_ERROR;
+
+        /*
+         * resume thread
+         * In rt_thread_resume function, it will remove current thread from
+         * suspend list
+         */
+        rt_thread_resume(thread);
+
+        /* enable interrupt */
+        rt_hw_interrupt_enable(temp);
+    }
+
+    return RT_EOK;
+}
 EventBits_t xEventGroupClearBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear )
 {
     //任务只有在等待事件发生（置一）时才会挂起 一旦置一则会立马调度
     //这里相当于手动清零事件
+    rt_ubase_t level;
     rt_event_t event = (rt_event_t)xEventGroup;
-    register rt_ubase_t level;
     rt_uint32_t eventset = 0;
 
+    /* parameter check */
+    RT_ASSERT(event != RT_NULL);
+    RT_ASSERT(rt_object_get_type(&event->parent.parent) == RT_Object_Class_Event);
+
+    /* disable interrupt */
     level = rt_hw_interrupt_disable();
-    event->set &= ~uxBitsToClear;
+
+    /* resume all waiting thread */
+    rt_ipc_list_resume_all(&event->parent.suspend_thread);
+
     eventset = event->set;
+    /* init event set */
+    event->set = 0;
+
+    /* enable interrupt */
     rt_hw_interrupt_enable(level);
+
+    // 中断中不进行调度
+    if(rt_interrupt_get_nest() == 0)
+        rt_schedule();
+
     return eventset;
 }
 
@@ -454,6 +505,7 @@ EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup, const EventBits_
 EventBits_t xEventGroupSync( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet, const EventBits_t uxBitsToWaitFor, TickType_t xTicksToWait )
 {
     //其他地方暂未使用 暂时不管
+    rt_kprintf("error : xEventGroupSync not implemented!!!\n\n");
     return 0;
 }
 

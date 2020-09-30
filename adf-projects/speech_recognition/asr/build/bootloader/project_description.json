@@ -1,8 +1,8 @@
 {
     "project_name":       "bootloader",
     "project_path":       "/home/null/Code/ESP32/esp-idf-4.0.1/components/bootloader/subproject",
-    "build_dir":          "/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader",
-    "config_file":        "/home/null/Code/ESP32/adf-examples/speech_recognition/asr/sdkconfig",
+    "build_dir":          "/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader",
+    "config_file":        "/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/sdkconfig",
     "config_defaults":    "",
     "app_elf":            "bootloader.elf",
     "app_bin":            "bootloader.bin",

@@ -135,24 +135,6 @@ _Static_assert(tskNO_AFFINITY == CONFIG_FREERTOS_NO_AFFINITY, "incorrect tskNO_A
 unsigned port_xSchedulerRunning[portNUM_PROCESSORS] = {0}; // Duplicate of inaccessible xSchedulerRunning; needed at startup to avoid counting nesting
 unsigned port_interruptNesting[portNUM_PROCESSORS] = {0};  // Interrupt nesting level. Increased/decreased in portasm.c, _frxt_int_enter/_frxt_int_exit
 
-/*-----------------------------------------------------------*/
-
-// User exception dispatcher when exiting
-void _xt_user_exit(void);
-
-//已经在 cpuport.c 中实现
-#if CONFIG_FREERTOS_TASK_FUNCTION_WRAPPER
-// Wrapper to allow task functions to return (increases stack overhead by 16 bytes)
-static void vPortTaskWrapper(TaskFunction_t pxCode, void *pvParameters)
-{
-	pxCode(pvParameters);
-	//RT-thread tasks should not return. Log the task name and abort.
-	char * pcTaskName = pcTaskGetTaskName(NULL);
-	ESP_LOGE("RT-thread", "RT-thread thread \"%s\" should not return, Aborting now!", pcTaskName);
-	abort();
-}
-#endif
-
 /*
  * Stack initialization
  */
@@ -164,6 +146,7 @@ void vPortEndScheduler( void )
 {
 	/* It is unlikely that the Xtensa port will get stopped.  If required simply
 	disable the tick interrupt here. */
+    rt_kprintf("error : vPortEndScheduler not implemented!!!\n\n");
 }
 
 /*-----------------------------------------------------------*/
@@ -190,6 +173,9 @@ BaseType_t xPortStartScheduler( void )
 	// __asm__ volatile ("call0    _frxt_dispatch\n");
 
 	// /* Should not get here. */
+
+    rt_kprintf("error : xPortStartScheduler not implemented!!!\n\n");
+
 	return pdTRUE;
 }
 
@@ -216,6 +202,7 @@ BaseType_t xPortSysTickHandler( void )
 // 切换 cpu 核心代码 这里直接为空
 void vPortYieldOtherCore( BaseType_t coreid ) {
 	// esp_crosscore_int_send_yield( coreid );
+    rt_kprintf("error : vPortYieldOtherCore not implemented!!!\n\n");
 }
 
 /*-----------------------------------------------------------*/
@@ -289,102 +276,8 @@ void vPortCPUInitializeMutex(portMUX_TYPE *mux) {
 // #endif
 // 	mux->owner=portMUX_FREE_VAL;
 // 	mux->count=0;
+    // rt_kprintf("error : vPortCPUInitializeMutex not implemented!!!\n\n");
 }
-
-// #include "portmux_impl.h"
-
-// /*
-//  * For kernel use: Acquire a per-CPU mux. Spinlocks, so don't hold on to these muxes for too long.
-//  */
-// #ifdef CONFIG_FREERTOS_PORTMUX_DEBUG
-// void vPortCPUAcquireMutex(portMUX_TYPE *mux, const char *fnName, int line) {
-// 	// unsigned int irqStatus = portENTER_CRITICAL_NESTED();
-// 	// vPortCPUAcquireMutexIntsDisabled(mux, portMUX_NO_TIMEOUT, fnName, line);
-// 	// portEXIT_CRITICAL_NESTED(irqStatus);
-// }
-
-// bool vPortCPUAcquireMutexTimeout(portMUX_TYPE *mux, int timeout_cycles, const char *fnName, int line) {
-// 	// unsigned int irqStatus = portENTER_CRITICAL_NESTED();
-// 	// bool result = vPortCPUAcquireMutexIntsDisabled(mux, timeout_cycles, fnName, line);
-// 	// portEXIT_CRITICAL_NESTED(irqStatus);
-// 	// return result;
-// }
-
-// #else
-// void vPortCPUAcquireMutex(portMUX_TYPE *mux) {
-// 	// unsigned int irqStatus = portENTER_CRITICAL_NESTED();
-// 	// vPortCPUAcquireMutexIntsDisabled(mux, portMUX_NO_TIMEOUT);
-// 	// portEXIT_CRITICAL_NESTED(irqStatus);
-// }
-
-// bool vPortCPUAcquireMutexTimeout(portMUX_TYPE *mux, int timeout_cycles) {
-// 	// unsigned int irqStatus = portENTER_CRITICAL_NESTED();
-// 	// bool result = vPortCPUAcquireMutexIntsDisabled(mux, timeout_cycles);
-// 	// portEXIT_CRITICAL_NESTED(irqStatus);
-// 	// return result;
-// }
-// #endif
-
-
-// /*
-//  * For kernel use: Release a per-CPU mux
-//  *
-//  * Mux must be already locked by this core
-//  */
-// #ifdef CONFIG_FREERTOS_PORTMUX_DEBUG
-// void vPortCPUReleaseMutex(portMUX_TYPE *mux, const char *fnName, int line) {
-// 	// unsigned int irqStatus = portENTER_CRITICAL_NESTED();
-// 	// vPortCPUReleaseMutexIntsDisabled(mux, fnName, line);
-// 	// portEXIT_CRITICAL_NESTED(irqStatus);
-// }
-// #else
-// void vPortCPUReleaseMutex(portMUX_TYPE *mux) {
-// 	// unsigned int irqStatus = portENTER_CRITICAL_NESTED();
-// 	// vPortCPUReleaseMutexIntsDisabled(mux);
-// 	// portEXIT_CRITICAL_NESTED(irqStatus);
-// }
-// #endif
-
-// void vPortSetStackWatchpoint( void* pxStackStart ) {
-// 	//Set watchpoint 1 to watch the last 32 bytes of the stack.
-// 	//Unfortunately, the Xtensa watchpoints can't set a watchpoint on a random [base - base+n] region because
-// 	//the size works by masking off the lowest address bits. For that reason, we futz a bit and watch the lowest 32
-// 	//bytes of the stack we can actually watch. In general, this can cause the watchpoint to be triggered at most
-// 	//28 bytes early. The value 32 is chosen because it's larger than the stack canary, which in FreeRTOS is 20 bytes.
-// 	//This way, we make sure we trigger before/when the stack canary is corrupted, not after.
-// 	int addr=(int)pxStackStart;
-// 	addr=(addr+31)&(~31);
-// 	esp_set_watchpoint(1, (char*)addr, 32, ESP_WATCHPOINT_STORE);
-// }
-
-// #if defined(CONFIG_ESP32_SPIRAM_SUPPORT)
-// /*
-//  * Compare & set (S32C1) does not work in external RAM. Instead, this routine uses a mux (in internal memory) to fake it.
-//  */
-// static portMUX_TYPE extram_mux = portMUX_INITIALIZER_UNLOCKED;
-
-// // spiram (pthread)中使用 直接屏蔽
-// void uxPortCompareSetExtram(volatile uint32_t *addr, uint32_t compare, uint32_t *set) {
-// // 	uint32_t prev;
-// // #ifdef CONFIG_FREERTOS_PORTMUX_DEBUG
-// // 	vPortCPUAcquireMutexIntsDisabled(&extram_mux, portMUX_NO_TIMEOUT, __FUNCTION__, __LINE__);
-// // #else
-// // 	vPortCPUAcquireMutexIntsDisabled(&extram_mux, portMUX_NO_TIMEOUT);
-// // #endif
-// // 	prev=*addr;
-// // 	if (prev==compare) {
-// // 		*addr=*set;
-// // 	}
-// // 	*set=prev;
-// // #ifdef CONFIG_FREERTOS_PORTMUX_DEBUG
-// // 	vPortCPUReleaseMutexIntsDisabled(&extram_mux, __FUNCTION__, __LINE__);
-// // #else
-// // 	vPortCPUReleaseMutexIntsDisabled(&extram_mux);
-// // #endif
-// }
-// #endif //defined(CONFIG_ESP32_SPIRAM_SUPPORT)
-
-
 
 uint32_t xPortGetTickRateHz(void) {
 	return (uint32_t)configTICK_RATE_HZ;

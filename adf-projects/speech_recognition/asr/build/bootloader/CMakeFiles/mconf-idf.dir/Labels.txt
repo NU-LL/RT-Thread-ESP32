@@ -1,13 +1,13 @@
 # Target labels
  mconf-idf
 # Source files and their labels
-/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/CMakeFiles/mconf-idf
-/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/CMakeFiles/mconf-idf.rule
-/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/CMakeFiles/mconf-idf-complete.rule
-/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install.rule
-/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir.rule
-/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download.rule
-/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update.rule
-/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch.rule
-/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure.rule
-/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/CMakeFiles/mconf-idf
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/CMakeFiles/mconf-idf.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/CMakeFiles/mconf-idf-complete.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure.rule
+/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build.rule

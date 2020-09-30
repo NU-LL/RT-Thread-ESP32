@@ -10525,10 +10525,7 @@
                                 "help": "The timeout of the watchdog, in miliseconds. Make this higher than the FreeRTOS tick rate.\n", 
                                 "id": "ESP_INT_WDT_TIMEOUT_MS", 
                                 "name": "ESP_INT_WDT_TIMEOUT_MS", 
-                                "range": [
-                                    10, 
-                                    10000
-                                ], 
+                                "range": null, 
                                 "title": "Interrupt watchdog timeout (ms)", 
                                 "type": "int"
                             }, 
@@ -12150,7 +12147,7 @@
                         ], 
                         "depends_on": null, 
                         "help": "FreeRTOS needs a timer with an associated interrupt to use as\nthe main tick source to increase counters, run timers and do\npre-emptive multitasking with. There are multiple timers available\nto do this, with different interrupt priorities. Check\n", 
-                        "id": "component-config-freertos-xtensa-timer-to-use-as-the-freertos-tick-source", 
+                        "id": "component-config-rt-thread-nano-xtensa-timer-to-use-as-the-freertos-tick-source", 
                         "name": "FREERTOS_CORETIMER", 
                         "title": "Xtensa timer to use as the FreeRTOS tick source", 
                         "type": "choice"
@@ -12213,7 +12210,7 @@
                         ], 
                         "depends_on": null, 
                         "help": "FreeRTOS can check for stack overflows in threads and trigger an user function\ncalled vApplicationStackOverflowHook when this happens.\n", 
-                        "id": "component-config-freertos-check-for-stack-overflow", 
+                        "id": "component-config-rt-thread-nano-check-for-stack-overflow", 
                         "name": "FREERTOS_CHECK_STACKOVERFLOW", 
                         "title": "Check for stack overflow", 
                         "type": "choice"
@@ -12286,7 +12283,7 @@
                         ], 
                         "depends_on": null, 
                         "help": "Failed FreeRTOS configASSERT() assertions can be configured to\nbehave in different ways.\n", 
-                        "id": "component-config-freertos-freertos-assertions", 
+                        "id": "component-config-rt-thread-nano-freertos-assertions", 
                         "name": "FREERTOS_ASSERT", 
                         "title": "FreeRTOS assertions", 
                         "type": "choice"
@@ -12472,7 +12469,7 @@
                                 ], 
                                 "depends_on": "FREERTOS_GENERATE_RUN_TIME_STATS", 
                                 "help": "Choose the clock source for FreeRTOS run time stats. Options are CPU0's\nCPU Clock or the ESP Timer. Both clock sources are 32 bits. The CPU\nClock can run at a higher frequency hence provide a finer resolution\nbut will overflow much quicker. Note that run time stats are only valid\nuntil the clock source overflows.\n", 
-                                "id": "component-config-freertos-enable-freertos-to-collect-run-time-stats-choose-the-clock-source-for-run-time-stats", 
+                                "id": "component-config-rt-thread-nano-enable-freertos-to-collect-run-time-stats-choose-the-clock-source-for-run-time-stats", 
                                 "name": "FREERTOS_RUN_TIME_STATS_CLK", 
                                 "title": "Choose the clock source for run time stats", 
                                 "type": "choice"
@@ -12571,8 +12568,8 @@
                     }
                 ], 
                 "depends_on": null, 
-                "id": "component-config-freertos", 
-                "title": "FreeRTOS", 
+                "id": "component-config-rt-thread-nano", 
+                "title": "RT-thread Nano", 
                 "type": "menu"
             }, 
             {

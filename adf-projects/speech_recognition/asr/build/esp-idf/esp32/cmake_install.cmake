@@ -1,4 +1,4 @@
-# Install script for directory: /home/null/Code/ESP32/esp-idf-4.0.1/components/esp32
+# Install script for directory: /home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/components/esp32
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

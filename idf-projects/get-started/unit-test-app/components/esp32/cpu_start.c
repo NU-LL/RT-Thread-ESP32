@@ -408,7 +408,6 @@ void start_cpu0_default(void)
     rt_system_timer_init();
     rt_system_scheduler_init();
 
-    ESP_LOGI(TAG, "Test !!!");// 这种 API 在调度器起来之前均无效 可以改用 ESP_EARLY_LOGI
     esp_timer_init();
     esp_set_time_from_rtc();
 #if CONFIG_ESP32_APPTRACE_ENABLE
@@ -423,6 +422,7 @@ void start_cpu0_default(void)
 #endif
     err = esp_pthread_init();
     assert(err == ESP_OK && "Failed to init pthread module!");
+
     do_global_ctors();
 #if CONFIG_ESP_INT_WDT
     esp_int_wdt_init();
@@ -441,6 +441,7 @@ void start_cpu0_default(void)
     esp_flash_app_init();
     esp_err_t flash_ret = esp_flash_init_default_chip();// menuconfig中开启 CONFIG_SPI_FLASH_USE_LEGACY_IMPL 即可解决该处问题
     assert(flash_ret == ESP_OK);
+
 #ifdef CONFIG_PM_ENABLE
     esp_pm_impl_init();
 #ifdef CONFIG_PM_DFS_INIT_AUTO
@@ -482,7 +483,7 @@ void start_cpu0_default(void)
 #endif
 
     portBASE_TYPE res = xTaskCreatePinnedToCore(&main_task, "esp_main",
-                                                ESP_TASK_MAIN_STACK, NULL,
+                                                2*ESP_TASK_MAIN_STACK, NULL,
                                                 ESP_TASK_MAIN_PRIO, NULL, 0);
     assert(res == pdTRUE);
     ESP_LOGI(TAG, "Starting scheduler on PRO CPU.");

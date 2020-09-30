@@ -1219,6 +1219,16 @@ rule CXX_STATIC_LIBRARY_LINKER____idf_wifi_provisioning
 
 
 #############################################
+# Rule for compiling ASM files.
+
+rule ASM_COMPILER____idf_main
+  depfile = $DEP_FILE
+  deps = gcc
+  command = /home/null/.espressif/tools/xtensa-esp32-elf/esp-2019r2-8.2.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building ASM object $out
+
+
+#############################################
 # Rule for compiling C files.
 
 rule C_COMPILER____idf_main
@@ -1574,7 +1584,7 @@ rule CXX_STATIC_LIBRARY_LINKER____idf_playlist
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /usr/bin/cmake -H/home/null/Code/ESP32/adf-examples/speech_recognition/asr -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr/build
+  command = /usr/bin/cmake -H/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt -B/home/null/Code/ESP32/adf-examples/speech_recognition/asr_rtt/build
   description = Re-running CMake...
   generator = 1
 
